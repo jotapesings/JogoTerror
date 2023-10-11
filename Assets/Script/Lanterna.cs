@@ -25,7 +25,7 @@ public class Lanterna : MonoBehaviour
     {
         if (ativaL == false)
         {
-            _lanterna.intensity = 10;
+            _lanterna.intensity = 2;
             ativaL = true;
         }
         else if (ativaL == true)

@@ -96,13 +96,13 @@ public class ControlaPlayer : MonoBehaviour
             _anim.SetBool("andandoD", false);
         }
         
-        if(_velocity.y > -1.9f && _player.isGrounded == false)
+        if(_player.isGrounded == false)
         {
             _anim.SetLayerWeight(1, 1);
             _anim.SetBool("pulo", true);
         }
 
-        if(_velocity.y <= -2f && _player.isGrounded ==  true)
+        if(_player.isGrounded == true)
         {
             _anim.SetLayerWeight(1, 0);
             _anim.SetBool("pulo", false);
