@@ -6,6 +6,11 @@ using Cinemachine;
 
 public class ControlaPlayer : MonoBehaviour
 {
+
+    [SerializeField] Vector3 _move;
+    [SerializeField] Vector3 _velocity;
+    [SerializeField] Vector3 _jumpPulo;
+
     [SerializeField] CharacterController _player;
     [SerializeField] Transform _MyCamera;
 
@@ -15,19 +20,15 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] private AudioClip[] passosAudioClip;
     [SerializeField] private AudioClip[] pulandoAudioClip;
 
-
-
     [SerializeField] Animator _anim;
 
     [SerializeField] float _jumpForce = 150;
     [SerializeField] float _gravity = -30;
     [SerializeField] float _speed = 5;
-    [SerializeField] float _rotationSpeed;
+
 
     [SerializeField] bool _isGrounded = false;
 
-    Vector3 _move;
-    Vector3 _velocity;
 
     void Start()
     {
@@ -38,10 +39,12 @@ public class ControlaPlayer : MonoBehaviour
     void Update()
     {
         MovimentoPlayer();
-        AplicaGravidade();
+        GravidadePlayer();
         AnimaPlayer();
 
         _player.Move(_velocity * Time.deltaTime);
+
+
     }
 
     public void SetMove(InputAction.CallbackContext value)
@@ -51,14 +54,10 @@ public class ControlaPlayer : MonoBehaviour
 
     public void SetPulo(InputAction.CallbackContext value)
     {
-        if (value.started && _isGrounded)
+        if (value.started && _player.isGrounded)
         {
-            _velocity.y = Mathf.Sqrt(_jumpForce * -2.0f * _gravity * Time.deltaTime);
-
+            _velocity.y = _jumpForce;
         }
-
-
-
 
     }
 
@@ -97,13 +96,13 @@ public class ControlaPlayer : MonoBehaviour
             _anim.SetBool("andandoD", false);
         }
         
-        if(_velocity.y > -1.9f && !_isGrounded)
+        if(_velocity.y > -1.9f && _player.isGrounded == false)
         {
             _anim.SetLayerWeight(1, 1);
             _anim.SetBool("pulo", true);
         }
 
-        if(_velocity.y <= -2f && _isGrounded)
+        if(_velocity.y <= -2f && _player.isGrounded ==  true)
         {
             _anim.SetLayerWeight(1, 0);
             _anim.SetBool("pulo", false);
@@ -123,37 +122,23 @@ public class ControlaPlayer : MonoBehaviour
 
     }
 
-    void AplicaGravidade()
+    void GravidadePlayer()
     {
-        if (_isGrounded && _velocity.y < 0)
+
+        // Verifica se o personagem não está no chão.
+        if (!_player.isGrounded)
         {
-            _velocity.y = -2f; // Quando o jogador está no chão, definimos uma velocidade vertical mínima.
-        }
-        else
-        {
+            // Aplica a gravidade à componente Y da velocidade.
             _velocity.y += _gravity * Time.deltaTime;
         }
+
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = true;
-        }
-    }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            _isGrounded = false;
-        }
-    }
 
     private void Passos()
     {
-        if(_isGrounded == true)
+        if(_player.isGrounded == true)
         {
             passosAudioSource.PlayOneShot(passosAudioClip[Random.Range(0, passosAudioClip.Length)]);
         }
