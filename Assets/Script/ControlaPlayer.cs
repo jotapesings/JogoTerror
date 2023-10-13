@@ -27,8 +27,6 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] float _speed = 5;
 
 
-    [SerializeField] bool _isGrounded = false;
-
 
     void Start()
     {
@@ -148,4 +146,6 @@ public class ControlaPlayer : MonoBehaviour
     {
         pulandoAudioSource.PlayOneShot(pulandoAudioClip[Random.Range(0, pulandoAudioClip.Length)]);
     }
+
+
 }
