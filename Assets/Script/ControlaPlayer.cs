@@ -7,6 +7,11 @@ using Cinemachine;
 public class ControlaPlayer : MonoBehaviour
 {
 
+    [SerializeField] Transform _pernaE;
+    [SerializeField] Transform _PernaD;
+
+    [SerializeField] public bool _AtivaMovimento = true;
+
     [SerializeField] Vector3 _move;
     [SerializeField] Vector3 _velocity;
     [SerializeField] Vector3 _jumpPulo;
@@ -26,6 +31,8 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] float _gravity = -30;
     [SerializeField] float _speed = 5;
 
+    [SerializeField] bool andou = false;
+
 
 
     void Start()
@@ -42,12 +49,17 @@ public class ControlaPlayer : MonoBehaviour
 
         _player.Move(_velocity * Time.deltaTime);
 
-
+        
     }
 
     public void SetMove(InputAction.CallbackContext value)
     {
-        _move = value.ReadValue<Vector3>();
+        if(_AtivaMovimento == true)
+        {
+            _move = value.ReadValue<Vector3>();
+        }
+        
+
     }
 
     public void SetPulo(InputAction.CallbackContext value)
@@ -100,7 +112,16 @@ public class ControlaPlayer : MonoBehaviour
             _anim.SetBool("pulo", true);
         }
 
-        if(_player.isGrounded == true)
+
+        //Andando na Diagonal
+        if(_move.y > 0.1f && _move.x > 0.1f)
+        {
+            _anim.SetBool("andandoDiagonalE", true);
+        }
+
+
+
+        if (_player.isGrounded == true)
         {
             _anim.SetLayerWeight(1, 0);
             _anim.SetBool("pulo", false);
@@ -110,15 +131,17 @@ public class ControlaPlayer : MonoBehaviour
 
     void MovimentoPlayer()
     {
-
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, _MyCamera.eulerAngles.y, transform.eulerAngles.z);
+
+        //Leitura dos eixos do Input System
+
+        float horizontalInput = _move.x;
+        float verticalInput = _move.y;
 
         _velocity = new Vector3(_move.x * _speed, _velocity.y, _move.y * _speed);
         _velocity = transform.TransformDirection(_velocity);
-
-
-
     }
+
 
     void GravidadePlayer()
     {
