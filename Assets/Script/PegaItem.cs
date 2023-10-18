@@ -116,7 +116,7 @@ public class PegaItem : MonoBehaviour
         {
             _cinemachine.SetActive(false);
             _player._AtivaMovimento = false;
-            _referenciaCamera.transform.position = new Vector3(10.6f, 2.27f, -1.76f);
+            _referenciaCamera.transform.position = new Vector3(10.6f, 2.1f, -1.76f);
             _referenciaCamera.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;

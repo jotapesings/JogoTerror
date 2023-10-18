@@ -47,6 +47,8 @@ public class ControlaPlayer : MonoBehaviour
         GravidadePlayer();
         AnimaPlayer();
 
+
+
         _player.Move(_velocity * Time.deltaTime);
 
         
@@ -54,7 +56,7 @@ public class ControlaPlayer : MonoBehaviour
 
     public void SetMove(InputAction.CallbackContext value)
     {
-        if(_AtivaMovimento == true)
+        if(value.performed && _AtivaMovimento == true)
         {
             _move = value.ReadValue<Vector3>();
         }
@@ -74,7 +76,7 @@ public class ControlaPlayer : MonoBehaviour
     void AnimaPlayer()
     {
 
-        if(_move.y > 0.1f)
+        if (_move.y > 0.1f)
         {
             _anim.SetBool("andandoF", true);
         }
@@ -111,15 +113,6 @@ public class ControlaPlayer : MonoBehaviour
             _anim.SetLayerWeight(1, 1);
             _anim.SetBool("pulo", true);
         }
-
-
-        //Andando na Diagonal
-        if(_move.y > 0.1f && _move.x > 0.1f)
-        {
-            _anim.SetBool("andandoDiagonalE", true);
-        }
-
-
 
         if (_player.isGrounded == true)
         {
