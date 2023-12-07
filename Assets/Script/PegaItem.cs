@@ -62,13 +62,13 @@ public class PegaItem : MonoBehaviour
             Debug.DrawLine(transform.position, PosicaoDoItem.point, Color.red);
 
             _encostouItem = true;
-            Debug.Log("Encostou no Bloco");
+           // Debug.Log("Encostou no Bloco");
 
         }
         else
         {
             _encostouItem = false;
-            Debug.Log("Não está mais no Bloco");
+            //Debug.Log("Não está mais no Bloco");
         }
     }
 

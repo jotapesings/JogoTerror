@@ -13,6 +13,7 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] public bool _AtivaMovimento = true;
     [SerializeField] private bool _checkGround;
     [SerializeField] private bool _isJumping;
+    [SerializeField] private bool _ativaCorrida;
 
     [SerializeField] Vector3 _move;
     [SerializeField] Vector3 _velocity;
@@ -32,8 +33,7 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] float _jumpForce;
     [SerializeField] float _gravity;
     [SerializeField] float _speed;
-
-    [SerializeField] bool andou = false;
+    [SerializeField] float _corrida;
 
 
 
@@ -53,10 +53,8 @@ public class ControlaPlayer : MonoBehaviour
         AnimaPlayer();
 
 
-
         _player.Move(_velocity * Time.deltaTime);
 
-        
     }
 
     public void SetMove(InputAction.CallbackContext value)
@@ -78,21 +76,50 @@ public class ControlaPlayer : MonoBehaviour
 
     }
 
+    public void SetCorrida(InputAction.CallbackContext context)
+    {
+        if(context.started && _ativaCorrida == false)
+        {
+            StartCoroutine(TempoCorrida());
+            
+        }
+
+    }
+
+    IEnumerator TempoCorrida()
+    {
+        _speed = _corrida;
+        //Debug.Log("Corrida");
+        _ativaCorrida = true;
+        _anim.speed = 1.3f;
+        yield return new WaitForSeconds(10f);
+        _speed = 1f;
+        _anim.speed = _speed;
+        //Debug.Log("Parou Corrida");
+        yield return new WaitForSeconds(10f);
+        _ativaCorrida = false;
+        //Debug.Log("Reiniciou");
+
+    }
+
     void AnimaPlayer()
     {
 
         if (_move.y > 0.1f)
         {
+
             _anim.SetBool("andandoF", true);
         }
 
         if(_move.y < -0.1f)
         {
+
             _anim.SetBool("andandoT", true);
         }
 
         if (_move.y == 0)
         {
+            
             _anim.SetBool("andandoF", false);
             _anim.SetBool("andandoT", false);
         }
@@ -113,17 +140,18 @@ public class ControlaPlayer : MonoBehaviour
             _anim.SetBool("andandoD", false);
         }
         
-        if(_player.isGrounded == false)
+        if(_checkGround == false)
         {
             _anim.SetLayerWeight(1, 1);
             _anim.SetBool("pulo", true);
         }
 
-        if (_player.isGrounded == true)
+        if (_checkGround == true)
         {
             _anim.SetLayerWeight(1, 0);
             _anim.SetBool("pulo", false);
         }
+
 
     }
 
@@ -155,7 +183,6 @@ public class ControlaPlayer : MonoBehaviour
         }
 
     }
-
 
 
     private void Passos()
