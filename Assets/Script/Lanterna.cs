@@ -21,6 +21,21 @@ public class Lanterna : MonoBehaviour
 
     }
 
+    public void SetLanternaFoco(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            _lanterna.spotAngle = 30f;
+            _lanterna.range = 30f;
+        }
+
+        if(context.canceled)
+        {
+            _lanterna.spotAngle = 80f;
+            _lanterna.range = 10f;
+        }
+    }
+
     public void SetLanterna(InputAction.CallbackContext value)
     {
         if (ativaL == false)
