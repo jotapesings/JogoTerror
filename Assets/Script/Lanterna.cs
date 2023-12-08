@@ -10,7 +10,7 @@ public class Lanterna : MonoBehaviour
     [SerializeField] bool ativaL = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _lanterna = GetComponent<Light>();
     }
@@ -26,13 +26,13 @@ public class Lanterna : MonoBehaviour
         if(context.performed)
         {
             _lanterna.spotAngle = 30f;
-            _lanterna.range = 30f;
+            _lanterna.range = 120f;
         }
 
         if(context.canceled)
         {
             _lanterna.spotAngle = 80f;
-            _lanterna.range = 10f;
+            _lanterna.range = 20f;
         }
     }
 
@@ -40,7 +40,7 @@ public class Lanterna : MonoBehaviour
     {
         if (ativaL == false)
         {
-            _lanterna.intensity = 2;
+            _lanterna.intensity = 3;
             ativaL = true;
         }
         else if (ativaL == true)
