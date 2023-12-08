@@ -8378,7 +8378,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 230.01, y: 1.758, z: 78.241}
+  m_LocalPosition: {x: 230.01, y: 1.7580001, z: 78.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9961,12 +9961,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114616172}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 1.758, z: 0.241}
+  m_LocalRotation: {x: 0.0010982231, y: -0.017673729, z: 0.02436696, w: 0.9995463}
+  m_LocalPosition: {x: -0.01343601, y: 0.1970015, z: 0.2386915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 543450652387186088}
+  m_Father: {fileID: 5901452234016360235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1142259351
 GameObject:
@@ -11226,7 +11226,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -14976,7 +14976,7 @@ Transform:
   m_GameObject: {fileID: 1575536942}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 230.01, y: 1.758, z: 78.241}
+  m_LocalPosition: {x: 230.01, y: 1.7580001, z: 78.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16518,33 +16518,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &1684616618
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148195020562}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!114 &1684616620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16586,10 +16559,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c4d5d8f7-c996-4a23-a8f7-c3479afaa3f0
     m_ActionName: Move/Move-Teclado[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 55c72331-e417-4317-ba57-86a7bade0aaf
-    m_ActionName: Move/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1684616622}
@@ -16718,6 +16687,7 @@ MonoBehaviour:
   _AtivaMovimento: 1
   _checkGround: 0
   _isJumping: 0
+  _ativaCorrida: 0
   _move: {x: 0, y: 0, z: 0}
   _velocity: {x: 0, y: 0, z: 0}
   _jumpPulo: {x: 0, y: 0, z: 0}
@@ -20387,7 +20357,6 @@ Transform:
   - {fileID: 1357434544819822907}
   - {fileID: 8069532376075737513}
   - {fileID: 1902802125}
-  - {fileID: 1114616173}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &608321760489755711
@@ -20464,7 +20433,6 @@ GameObject:
   - component: {fileID: 543450652387186088}
   - component: {fileID: 1684616622}
   - component: {fileID: 1684616621}
-  - component: {fileID: 1684616618}
   - component: {fileID: 1684616617}
   - component: {fileID: 1684616620}
   m_Layer: 7
@@ -22579,6 +22547,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8700783697510532037}
+  - {fileID: 1114616173}
   m_Father: {fileID: 6515712192611593809}
   m_LocalEulerAnglesHint: {x: -7.6448894, y: -1.3325143, z: 0.21155974}
 --- !u!1 &5936462033403634720

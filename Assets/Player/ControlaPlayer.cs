@@ -13,6 +13,7 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] public bool _AtivaMovimento = true;
     [SerializeField] private bool _checkGround;
     [SerializeField] private bool _isJumping;
+    [SerializeField] private bool _ativaCorrida;
 
     [SerializeField] Vector3 _move;
     [SerializeField] Vector3 _velocity;
@@ -29,10 +30,10 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] private AudioClip[] pulandoAudioClip;
 
     [SerializeField] Animator _anim;
+
+    //Variavel para Animação Fluir
     private int InputXHash = Animator.StringToHash("InputX");
     private int InputYHash = Animator.StringToHash("InputY");
-
-    //Variavel Teste
     private float smoothInputX;
     private float smoothInputY;
     private float velocityX;
@@ -73,24 +74,23 @@ public class ControlaPlayer : MonoBehaviour
         {
             _move = context.ReadValue<Vector3>();
         }
-        
 
     }
 
 
     public void SetCorrida(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && _ativaCorrida == true)
         {
             _speed = _corrida;
-            //_anim.speed = 1.3f;
-            
+            _anim.speed = 1.3f;
+
         }
 
         if(context.canceled)
         {
             _speed = 1.5f;
-            //_anim.speed = 1f;
+            _anim.speed = 1f;
             
         }
 
@@ -99,14 +99,17 @@ public class ControlaPlayer : MonoBehaviour
 
     public void SetAgachar(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && _checkGround)
         {
-            _anim.SetLayerWeight(1, 1);
+            _ativaCorrida = false;
+            _anim.SetBool("Troca", true);
+            
         }
 
-        if(context.canceled)
+        if(context.canceled && _checkGround)
         {
-            _anim.SetLayerWeight(1, 0);
+            _ativaCorrida = true;
+            _anim.SetBool("Troca", false);
         }
     }
 
