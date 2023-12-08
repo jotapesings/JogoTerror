@@ -13,7 +13,6 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] public bool _AtivaMovimento = true;
     [SerializeField] private bool _checkGround;
     [SerializeField] private bool _isJumping;
-    [SerializeField] private bool _ativaCorrida;
 
     [SerializeField] Vector3 _move;
     [SerializeField] Vector3 _velocity;
@@ -21,6 +20,7 @@ public class ControlaPlayer : MonoBehaviour
 
     [SerializeField] CharacterController _player;
     [SerializeField] Transform _MyCamera;
+    [SerializeField] Transform _refecenciaCamera;
 
     [SerializeField] private AudioSource passosAudioSource;
     [SerializeField] private AudioSource pulandoAudioSource;
@@ -29,6 +29,14 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] private AudioClip[] pulandoAudioClip;
 
     [SerializeField] Animator _anim;
+    private int InputXHash = Animator.StringToHash("InputX");
+    private int InputYHash = Animator.StringToHash("InputY");
+
+    //Variavel Teste
+    private float smoothInputX;
+    private float smoothInputY;
+    private float velocityX;
+    private float velocityY;
 
     [SerializeField] float _jumpForce;
     [SerializeField] float _gravity;
@@ -37,7 +45,9 @@ public class ControlaPlayer : MonoBehaviour
 
 
 
-    void Start()
+
+
+    void Awake()
     {
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
@@ -57,102 +67,55 @@ public class ControlaPlayer : MonoBehaviour
 
     }
 
-    public void SetMove(InputAction.CallbackContext value)
+    public void SetMove(InputAction.CallbackContext context)
     {
-        if(value.performed && _AtivaMovimento == true)
+        if(_AtivaMovimento == true)
         {
-            _move = value.ReadValue<Vector3>();
+            _move = context.ReadValue<Vector3>();
         }
         
 
     }
 
-    public void SetPulo(InputAction.CallbackContext value)
-    {
-        if (value.started && _checkGround)
-        {
-            _velocity.y = _jumpForce;
-        }
-
-    }
 
     public void SetCorrida(InputAction.CallbackContext context)
     {
-        if(context.started && _ativaCorrida == false)
+        if(context.performed)
         {
-            StartCoroutine(TempoCorrida());
+            _speed = _corrida;
+            //_anim.speed = 1.3f;
+            
+        }
+
+        if(context.canceled)
+        {
+            _speed = 1.5f;
+            //_anim.speed = 1f;
             
         }
 
     }
 
-    IEnumerator TempoCorrida()
-    {
-        _speed = _corrida;
-        //Debug.Log("Corrida");
-        _ativaCorrida = true;
-        _anim.speed = 1.3f;
-        yield return new WaitForSeconds(10f);
-        _speed = 1f;
-        _anim.speed = _speed;
-        //Debug.Log("Parou Corrida");
-        yield return new WaitForSeconds(10f);
-        _ativaCorrida = false;
-        //Debug.Log("Reiniciou");
 
+    public void SetAgachar(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            _anim.SetLayerWeight(1, 1);
+        }
+
+        if(context.canceled)
+        {
+            _anim.SetLayerWeight(1, 0);
+        }
     }
 
     void AnimaPlayer()
     {
-
-        if (_move.y > 0.1f)
-        {
-
-            _anim.SetBool("andandoF", true);
-        }
-
-        if(_move.y < -0.1f)
-        {
-
-            _anim.SetBool("andandoT", true);
-        }
-
-        if (_move.y == 0)
-        {
-            
-            _anim.SetBool("andandoF", false);
-            _anim.SetBool("andandoT", false);
-        }
-
-        if(_move.x < -0.1f)
-        {
-            _anim.SetBool("andandoE", true);
-        }
-
-        if(_move.x > 0.1f)
-        {
-            _anim.SetBool("andandoD", true);
-        }
-
-        if(_move.x == 0f)
-        {
-            _anim.SetBool("andandoE", false);
-            _anim.SetBool("andandoD", false);
-        }
-        
-        if(_checkGround == false)
-        {
-            _anim.SetLayerWeight(1, 1);
-            _anim.SetBool("pulo", true);
-        }
-
-        if (_checkGround == true)
-        {
-            _anim.SetLayerWeight(1, 0);
-            _anim.SetBool("pulo", false);
-        }
-
-
+        smoothInputX = Mathf.SmoothDamp(smoothInputX, _move.x, ref velocityX, 0.1f);
+        smoothInputY = Mathf.SmoothDamp(smoothInputY, _move.y, ref velocityY, 0.1f);
+        _anim.SetFloat(InputXHash, smoothInputX);
+        _anim.SetFloat(InputYHash, smoothInputY);
     }
 
     void MovimentoPlayer()
@@ -160,9 +123,6 @@ public class ControlaPlayer : MonoBehaviour
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, _MyCamera.eulerAngles.y, transform.eulerAngles.z);
 
         //Leitura dos eixos do Input System
-
-        float horizontalInput = _move.x;
-        float verticalInput = _move.y;
 
         _velocity = new Vector3(_move.x * _speed, _velocity.y, _move.y * _speed);
         _velocity = transform.TransformDirection(_velocity);

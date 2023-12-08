@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "55c72331-e417-4317-ba57-86a7bade0aaf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Lanterna",
                     "type": "Button",
                     "id": "5e47f8db-21cc-4218-a094-a961e7db69f1",
@@ -54,6 +45,15 @@
                     "name": "Corrida",
                     "type": "Button",
                     "id": "18c0b2f0-141a-42cf-a20c-ba7cd79be44d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Agachar",
+                    "type": "Button",
+                    "id": "d13bff2c-964a-44e1-b090-f4a3d775cc7e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -115,28 +115,6 @@
                     "action": "Move-Teclado",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "36c93ee9-d1d3-4824-af8e-d92fbd5cf586",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e05d8746-d158-4e7b-b5f0-8683fa020c12",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "3D Vector",
@@ -223,6 +201,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Corrida",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51443267-b5b7-414b-9110-3bd4603af5c9",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Agachar",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
