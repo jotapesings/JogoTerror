@@ -87,7 +87,7 @@ public class ControlaPlayer : MonoBehaviour
 
         }
 
-        if(context.canceled)
+        if(context.canceled )
         {
             _speed = 2f;
             _anim.SetBool("Corrida", false);
@@ -156,13 +156,6 @@ public class ControlaPlayer : MonoBehaviour
         }
     }
 
-    public void Corrida()
-    {
-        if (_checkGround == true)
-        {
-            passosAudioSource.PlayOneShot(passosAudioClip[Random.Range(0, passosAudioClip.Length)]);
-        }
-    }
 
     private void Pulando()
     {
