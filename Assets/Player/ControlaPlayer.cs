@@ -83,15 +83,15 @@ public class ControlaPlayer : MonoBehaviour
         if(context.performed && _ativaCorrida == true)
         {
             _speed = _corrida;
-            _anim.speed = 1.3f;
+            _anim.SetBool("Corrida", true);
 
         }
 
         if(context.canceled)
         {
-            _speed = 1.5f;
-            _anim.speed = 1f;
-            
+            _speed = 2f;
+            _anim.SetBool("Corrida", false);
+
         }
 
     }
@@ -151,6 +151,14 @@ public class ControlaPlayer : MonoBehaviour
     private void Passos()
     {
         if(_checkGround == true)
+        {
+            passosAudioSource.PlayOneShot(passosAudioClip[Random.Range(0, passosAudioClip.Length)]);
+        }
+    }
+
+    public void Corrida()
+    {
+        if (_checkGround == true)
         {
             passosAudioSource.PlayOneShot(passosAudioClip[Random.Range(0, passosAudioClip.Length)]);
         }
