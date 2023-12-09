@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
 
 public class PegaItem : MonoBehaviour
 {
@@ -47,8 +46,6 @@ public class PegaItem : MonoBehaviour
     {
         PegadorDeItens();
         EntregaDeItens();
-        //Portas();
-        //TelaCamera();
 
 
     }
@@ -93,6 +90,7 @@ public class PegaItem : MonoBehaviour
 
     }
 
+
     /*
     void Portas()
     {
@@ -136,51 +134,14 @@ public class PegaItem : MonoBehaviour
     public void SetObjeto(InputAction.CallbackContext value)
     {
 
-        /*if(value.started && _olhouTela == true && _ativouCamera == false)
-        {
-            _cinemachine.SetActive(false);
-            _player._AtivaMovimento = false;
-            _referenciaCamera.transform.position = new Vector3(10.6f, 2.1f, -1.76f);
-            _referenciaCamera.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-            _ativouCamera = true;
-        }
-        
-        else if (value.started && _olhouTela == true && _ativouCamera ==  true)
-        {
-            _cinemachine.SetActive(true);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            _player._AtivaMovimento = true;
-            _ativouCamera = false;
-        }
-
-
-        if(value.started && _olhouPorta == true && _Porta == false)
-        {
-
-            StartCoroutine(TimePortaAberta());
-           
-
-        }
-
-        if(value.started && _olhouPorta == true && _Porta == true)
-        {
-
-            StartCoroutine(TimePortaFechada());
-
-        }
-        */
-
-        if(value.performed && _encostouItem == true) //Pega o Item no E
+        if(value.performed && _encostouItem == true) //Pega o Item na Primeira Fase
         {
             PegouItem = true; //Essa variavel é publica!
             _qtdItem += 1; //Essa variavel é publica!
 
         }
 
-        if(value.performed && _encostouEntrega == true && _qtdItem >= 1)
+        if(value.performed && _encostouEntrega == true && _qtdItem >= 1) //Entrega o Item na Maquina do Tempo da Primeira Fase
         {
             EntregouItem = true;
             PegouItem = false;
@@ -188,20 +149,25 @@ public class PegaItem : MonoBehaviour
             _peca[0].SetActive(false);
         }   
 
+        if(value.performed && _encostouEntrega == true)
+        {
+
+        }
+
 
     }
 
-    private IEnumerator TimePortaAberta()
-    {
-        _animPortaQuarto.Play("DoorSingleAbrir");
-        yield return new WaitForSeconds(1f);
-        _Porta = true;
-    }
+    //private IEnumerator TimePortaAberta()
+    //{
+    //    _animPortaQuarto.Play("DoorSingleAbrir");
+    //    yield return new WaitForSeconds(1f);
+    //    _Porta = true;
+    //}
 
-    private IEnumerator TimePortaFechada()
-    {
-        _animPortaQuarto.Play("DoorSingleFechar");
-        yield return new WaitForSeconds(1f);
-        _Porta = false;
-    }
+    //private IEnumerator TimePortaFechada()
+    //{
+    //    _animPortaQuarto.Play("DoorSingleFechar");
+    //    yield return new WaitForSeconds(1f);
+    //    _Porta = false;
+    //}
 }

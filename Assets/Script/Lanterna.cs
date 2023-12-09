@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Lanterna : MonoBehaviour
 {
+    [SerializeField] public bool _desativaGlobal;
 
     [SerializeField] Light _lanterna;
     [SerializeField] bool ativaL = false;
@@ -38,12 +39,12 @@ public class Lanterna : MonoBehaviour
 
     public void SetLanterna(InputAction.CallbackContext value)
     {
-        if (ativaL == false)
+        if (ativaL == false && _desativaGlobal == false)
         {
             _lanterna.intensity = 3;
             ativaL = true;
         }
-        else if (ativaL == true)
+        else if (ativaL == true && _desativaGlobal == false)
         {
             _lanterna.intensity = 0;
             ativaL = false;
