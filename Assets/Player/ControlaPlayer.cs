@@ -127,7 +127,7 @@ public class ControlaPlayer : MonoBehaviour
 
         //Leitura dos eixos do Input System
 
-        _velocity = new Vector3(_move.x * _speed, _velocity.y, _move.y * _speed);
+        _velocity = new Vector3(_move.x * _speed, _player.velocity.y, _move.y * _speed);
         _velocity = transform.TransformDirection(_velocity);
     }
 
