@@ -20,18 +20,24 @@ public class PegaItem : MonoBehaviour
 
     [Header("Variavel de Itens")]
     //Variavel para pegar Itens
-    [SerializeField] bool PegouItem;
+    [SerializeField] public bool PegouItem;
+    [SerializeField] public bool EntregouItem;
     [SerializeField] bool _encostouItem;
+
+    //Variavel Quantidade de Itens
+    [SerializeField] GameObject[] _peca;
+    [SerializeField] public int _qtdItem;
 
     [Header("Variavel de Portas")]
     //Variavel para Abri Portas
     [SerializeField] bool _olhouPorta = false;
     [SerializeField] bool _Porta = false;
 
-    [Header("Variavel de Tela")]
-    //Variavel para Acessar a TV
-    [SerializeField] bool _olhouTela = false;
-    [SerializeField] bool _ativouCamera = false;
+    [Header("Variavel da Maquina")]
+    //Variavel para Acessar a Maquina do Tempo
+    [SerializeField] bool _encostouEntrega = false;
+
+    //[SerializeField] bool _ativouCamera = false;
 
     [Header("Raycast Objetos")]
     [SerializeField] Transform _objeto;
@@ -40,14 +46,10 @@ public class PegaItem : MonoBehaviour
     void Update()
     {
         PegadorDeItens();
-        Portas();
-        TelaCamera();
+        EntregaDeItens();
+        //Portas();
+        //TelaCamera();
 
-        if (PegouItem == true)
-        {
-            _item.transform.position = _objeto.transform.position;
-        }
-        
 
     }
 
@@ -72,6 +74,26 @@ public class PegaItem : MonoBehaviour
         }
     }
 
+    void EntregaDeItens()
+    {
+        RaycastHit PosicaoDaEntrega;
+
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoDaEntrega, 3, SelecionaLayer[1]))
+        {
+
+            Debug.DrawLine(transform.position, PosicaoDaEntrega.point, Color.blue);
+
+            _encostouEntrega = true;
+
+        }
+        else
+        {
+            _encostouEntrega = false;
+        }
+
+    }
+
+    /*
     void Portas()
     {
         RaycastHit PosicaoPorta;
@@ -100,19 +122,21 @@ public class PegaItem : MonoBehaviour
 
             Debug.DrawLine(transform.position, PosicaoTela.point, Color.blue);
 
-            _olhouTela = true;
+            //_olhouTela = true;
 
         }
         else
         {
-            _olhouTela = false;
+            //_olhouTela = false;
         }
     }
+
+    */
 
     public void SetObjeto(InputAction.CallbackContext value)
     {
 
-        if(value.started && _olhouTela == true && _ativouCamera == false)
+        /*if(value.started && _olhouTela == true && _ativouCamera == false)
         {
             _cinemachine.SetActive(false);
             _player._AtivaMovimento = false;
@@ -147,20 +171,24 @@ public class PegaItem : MonoBehaviour
             StartCoroutine(TimePortaFechada());
 
         }
+        */
 
-
-        if(value.started && _encostouItem == true)
+        if(value.performed && _encostouItem == true) //Pega o Item no E
         {
-            PegouItem = true;
-            _itemGravidade.useGravity = false;
+            PegouItem = true; //Essa variavel é publica!
+            _qtdItem += 1; //Essa variavel é publica!
+
         }
 
-        if(value.started && _encostouItem == false)
+        if(value.performed && _encostouEntrega == true && _qtdItem >= 1)
         {
+            EntregouItem = true;
             PegouItem = false;
-            _itemGravidade.useGravity = true;
+            _qtdItem -= 1;
+            _peca[0].SetActive(false);
+        }   
 
-        }
+
     }
 
     private IEnumerator TimePortaAberta()
