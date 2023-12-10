@@ -32,7 +32,7 @@ public class Lanterna : MonoBehaviour
 
         if(context.canceled)
         {
-            _lanterna.spotAngle = 80f;
+            _lanterna.spotAngle = 60f;
             _lanterna.range = 20f;
         }
     }

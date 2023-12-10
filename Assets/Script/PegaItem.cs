@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PegaItem : MonoBehaviour
 {
 
-    [SerializeField] GameControle _Lanterna;
+    [SerializeField] GameControle _gameControle;
 
     [SerializeField] ControlaPlayer _player;
     [SerializeField] GameObject _cinemachine;
@@ -47,7 +47,7 @@ public class PegaItem : MonoBehaviour
 
     private void Start()
     {
-        _Lanterna = FindAnyObjectByType<GameControle>();
+        _gameControle = FindAnyObjectByType<GameControle>();
     }
 
     // Update is called once per frame
@@ -86,19 +86,23 @@ public class PegaItem : MonoBehaviour
         RaycastHit PosicaoDaLanterna;
         
 
-        if (Physics.Raycast(transform.position, transform.forward, out PosicaoDaLanterna, 3, SelecionaLayer[2]))
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoDaLanterna, 2, SelecionaLayer[2]))
         {
 
             Debug.DrawLine(transform.position, PosicaoDaLanterna.point, Color.red);
 
             _encostouLantera = true;
-            // Debug.Log("Encostou no Bloco");
+
+            //Essa linha faz com que apareça o texto Aperte "E";
+            _gameControle._textoDosItens[0].gameObject.SetActive(true);
 
         }
         else
         {
             _encostouLantera = false;
-            //Debug.Log("Não está mais no Bloco");
+
+            //Essa linha faz com que desapareça o texto Aperte "E";
+            _gameControle._textoDosItens[0].gameObject.SetActive(false);
         }
     }
 
@@ -187,8 +191,11 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouLantera == true)
         {
-            _Lanterna._lanterna._desativaGlobal = false;
-            _Lanterna._objetoLanterna.SetActive(false);
+            _gameControle._lanterna._desativaGlobal = false;
+            _gameControle._objetoLanterna.SetActive(false);
+            _gameControle._textoDosItens[0].gameObject.SetActive(false); ////Essa linha faz com que desapareça o texto Aperte "E"; 
+
+
         }
 
     }
