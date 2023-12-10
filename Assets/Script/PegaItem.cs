@@ -7,6 +7,7 @@ public class PegaItem : MonoBehaviour
 {
 
     [SerializeField] GameControle _gameControle;
+    [SerializeField] ControlaAudio _audioControle;
 
     [SerializeField] ControlaPlayer _player;
     [SerializeField] GameObject _cinemachine;
@@ -48,6 +49,7 @@ public class PegaItem : MonoBehaviour
     private void Start()
     {
         _gameControle = FindAnyObjectByType<GameControle>();
+        _audioControle = FindAnyObjectByType<ControlaAudio>();
     }
 
     // Update is called once per frame
@@ -95,6 +97,7 @@ public class PegaItem : MonoBehaviour
 
             //Essa linha faz com que apareça o texto Aperte "E";
             _gameControle._textoDosItens[0].gameObject.SetActive(true);
+            
 
         }
         else
@@ -191,6 +194,8 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouLantera == true)
         {
+            
+            _audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
             _gameControle._lanterna._desativaGlobal = false;
             _gameControle._objetoLanterna.SetActive(false);
             _gameControle._textoDosItens[0].gameObject.SetActive(false); ////Essa linha faz com que desapareça o texto Aperte "E"; 

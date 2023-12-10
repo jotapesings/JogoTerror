@@ -7,6 +7,8 @@ using Cinemachine;
 public class ControlaPlayer : MonoBehaviour
 {
 
+    [SerializeField] private GameControle _playerInput;
+
     [SerializeField] Transform _pernaE;
     [SerializeField] Transform _PernaD;
 
@@ -14,6 +16,7 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] private bool _checkGround;
     [SerializeField] private bool _isJumping;
     [SerializeField] private bool _ativaCorrida;
+    [SerializeField] private bool _animaInicial;
 
     [SerializeField] Vector3 _move;
     [SerializeField] Vector3 _velocity;
@@ -28,6 +31,7 @@ public class ControlaPlayer : MonoBehaviour
 
     [SerializeField] private AudioClip[] passosAudioClip;
     [SerializeField] private AudioClip[] pulandoAudioClip;
+    
 
     [SerializeField] Animator _anim;
 
@@ -52,6 +56,10 @@ public class ControlaPlayer : MonoBehaviour
     {
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
+
+        StartCoroutine(AnimacaoInicial());
+        
+
     }
 
     void Update()
@@ -64,16 +72,18 @@ public class ControlaPlayer : MonoBehaviour
         AnimaPlayer();
 
 
+
         _player.Move(_velocity * Time.deltaTime);
 
     }
 
     public void SetMove(InputAction.CallbackContext context)
     {
-        if(_AtivaMovimento == true)
+        if (_AtivaMovimento == true)
         {
             _move = context.ReadValue<Vector3>();
         }
+        
 
     }
 
@@ -129,6 +139,7 @@ public class ControlaPlayer : MonoBehaviour
 
         _velocity = new Vector3(_move.x * _speed, _velocity.y, _move.y * _speed);
         _velocity = transform.TransformDirection(_velocity);
+
     }
 
 
@@ -157,9 +168,11 @@ public class ControlaPlayer : MonoBehaviour
     }
 
 
-    private void Pulando()
+    IEnumerator AnimacaoInicial()
     {
-        pulandoAudioSource.PlayOneShot(pulandoAudioClip[Random.Range(0, pulandoAudioClip.Length)]);
+        _AtivaMovimento = false;
+        yield return new WaitForSeconds(12f);
+        _AtivaMovimento = true;
     }
 
 

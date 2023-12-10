@@ -6639,7 +6639,9 @@ MonoBehaviour:
   _AmbientAudio: {fileID: 332488368}
   _VozPlayer: {fileID: 1311675231}
   _BibliotecaVoz:
-  - {fileID: 8300000, guid: 0b98a5e34b21e7443bd59939ce4cf0dc, type: 3}
+  - {fileID: 8300000, guid: add5b310b8cf4444cb7c843ffa21cf1b, type: 3}
+  - {fileID: 8300000, guid: 915f67f9430c39f49a2e8da54bba8489, type: 3}
+  _ativaFala: 0
 --- !u!4 &723828121
 Transform:
   m_ObjectHideFlags: 0
@@ -9162,6 +9164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameControle: {fileID: 0}
+  _audioControle: {fileID: 0}
   _player: {fileID: 1684616622}
   _cinemachine: {fileID: 1575536942}
   _referenciaCamera: {fileID: 963194228}
@@ -12866,7 +12869,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0b98a5e34b21e7443bd59939ce4cf0dc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -17867,12 +17870,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a87aba08fddd114dadfb5d3b764ef3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 0}
   _pernaE: {fileID: 2559285841940139072}
   _PernaD: {fileID: 8169382869988524547}
   _AtivaMovimento: 1
   _checkGround: 0
   _isJumping: 0
   _ativaCorrida: 1
+  _animaInicial: 0
   _move: {x: 0, y: 0, z: 0}
   _velocity: {x: 0, y: 0, z: 0}
   _jumpPulo: {x: 0, y: 0, z: 0}
