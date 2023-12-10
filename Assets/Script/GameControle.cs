@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameControle : MonoBehaviour
 {
 
-    private Lanterna _lanterna;
+    public Lanterna _lanterna;
+    public GameObject _objetoLanterna;
 
     // Start is called before the first frame update
     void Start()

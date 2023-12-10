@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PegaItem : MonoBehaviour
 {
 
+    [SerializeField] GameControle _Lanterna;
+
     [SerializeField] ControlaPlayer _player;
     [SerializeField] GameObject _cinemachine;
     [SerializeField] Transform _referenciaCamera;
@@ -22,6 +24,7 @@ public class PegaItem : MonoBehaviour
     [SerializeField] public bool PegouItem;
     [SerializeField] public bool EntregouItem;
     [SerializeField] bool _encostouItem;
+    [SerializeField] bool _encostouLantera;
 
     //Variavel Quantidade de Itens
     [SerializeField] GameObject[] _peca;
@@ -41,16 +44,23 @@ public class PegaItem : MonoBehaviour
     [Header("Raycast Objetos")]
     [SerializeField] Transform _objeto;
 
+
+    private void Start()
+    {
+        _Lanterna = FindAnyObjectByType<GameControle>();
+    }
+
     // Update is called once per frame
     void Update()
     {
         PegadorDeItens();
         EntregaDeItens();
+        PegaLanterna();
 
 
     }
 
-    void PegadorDeItens()
+    void PegadorDeItens() //Pega Itens
     {
         RaycastHit PosicaoDoItem;
 
@@ -67,6 +77,27 @@ public class PegaItem : MonoBehaviour
         else
         {
             _encostouItem = false;
+            //Debug.Log("Não está mais no Bloco");
+        }
+    }
+
+    void PegaLanterna()
+    {
+        RaycastHit PosicaoDaLanterna;
+        
+
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoDaLanterna, 3, SelecionaLayer[2]))
+        {
+
+            Debug.DrawLine(transform.position, PosicaoDaLanterna.point, Color.red);
+
+            _encostouLantera = true;
+            // Debug.Log("Encostou no Bloco");
+
+        }
+        else
+        {
+            _encostouLantera = false;
             //Debug.Log("Não está mais no Bloco");
         }
     }
@@ -154,6 +185,11 @@ public class PegaItem : MonoBehaviour
 
         }
 
+        if(value.performed && _encostouLantera == true)
+        {
+            _Lanterna._lanterna._desativaGlobal = false;
+            _Lanterna._objetoLanterna.SetActive(false);
+        }
 
     }
 

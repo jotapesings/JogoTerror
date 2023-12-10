@@ -55,7 +55,7 @@ public class DialogoControle : MonoBehaviour
     }
 
 
-    IEnumerator CarregarCena()
+    IEnumerator CarregarCena() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
     {
         yield return new WaitForSeconds(1f);
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(proximaFase);
