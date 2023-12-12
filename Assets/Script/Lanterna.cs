@@ -5,14 +5,18 @@ using UnityEngine.InputSystem;
 
 public class Lanterna : MonoBehaviour
 {
+
+    GameControle _gameControle;
+
     [SerializeField] public bool _desativaGlobal;
 
-    [SerializeField] Light _lanterna;
-    [SerializeField] bool ativaL = false;
+    [SerializeField] public Light _lanterna;
+    [SerializeField] public bool ativaL = false;
 
     // Start is called before the first frame update
     void Awake()
     {
+        _gameControle = FindAnyObjectByType<GameControle>();
         _lanterna = GetComponent<Light>();
     }
 
@@ -41,11 +45,13 @@ public class Lanterna : MonoBehaviour
     {
         if (ativaL == false && _desativaGlobal == false)
         {
+            _gameControle._rigMao.weight = 1;
             _lanterna.intensity = 3;
             ativaL = true;
         }
         else if (ativaL == true && _desativaGlobal == false)
         {
+            _gameControle._rigMao.weight = 0;
             _lanterna.intensity = 0;
             ativaL = false;
         }

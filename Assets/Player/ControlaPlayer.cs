@@ -7,8 +7,6 @@ using Cinemachine;
 public class ControlaPlayer : MonoBehaviour
 {
 
-    [SerializeField] private GameControle _playerInput;
-
     [SerializeField] Transform _pernaE;
     [SerializeField] Transform _PernaD;
 
@@ -57,7 +55,7 @@ public class ControlaPlayer : MonoBehaviour
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
 
-        StartCoroutine(AnimacaoInicial());
+        //StartCoroutine(AnimacaoInicial());
         
 
     }
@@ -67,7 +65,12 @@ public class ControlaPlayer : MonoBehaviour
 
         _checkGround = _player.isGrounded;
 
-        MovimentoPlayer();
+        if (_AtivaMovimento == true)
+        {
+            MovimentoPlayer();
+        }
+
+        
         GravidadePlayer();
         AnimaPlayer();
 
@@ -79,11 +82,8 @@ public class ControlaPlayer : MonoBehaviour
 
     public void SetMove(InputAction.CallbackContext context)
     {
-        if (_AtivaMovimento == true)
-        {
-            _move = context.ReadValue<Vector3>();
-        }
-        
+
+        _move = context.ReadValue<Vector3>();        
 
     }
 

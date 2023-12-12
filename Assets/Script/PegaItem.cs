@@ -8,6 +8,7 @@ public class PegaItem : MonoBehaviour
 
     [SerializeField] GameControle _gameControle;
     [SerializeField] ControlaAudio _audioControle;
+    [SerializeField] Lanterna _lanterna;
 
     [SerializeField] ControlaPlayer _player;
     [SerializeField] GameObject _cinemachine;
@@ -48,6 +49,7 @@ public class PegaItem : MonoBehaviour
 
     private void Start()
     {
+        _lanterna = FindAnyObjectByType<Lanterna>();
         _gameControle = FindAnyObjectByType<GameControle>();
         _audioControle = FindAnyObjectByType<ControlaAudio>();
     }
@@ -194,7 +196,12 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouLantera == true)
         {
-            
+            //Levanta a mão, ativa a Lanterna e sua Luz.
+            _gameControle._rigMao.weight = 1;
+            _lanterna.ativaL = true;
+            _lanterna._lanterna.intensity = 3;
+
+
             _audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
             _gameControle._lanterna._desativaGlobal = false;
             _gameControle._objetoLanterna.SetActive(false);

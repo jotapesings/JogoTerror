@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Animations.Rigging;
 using TMPro;
 
 public class GameControle : MonoBehaviour
 {
+
+
+    public Rig _rigMao;
 
     public Lanterna _lanterna;
     public GameObject _objetoLanterna;
