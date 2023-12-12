@@ -10,7 +10,7 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] Transform _pernaE;
     [SerializeField] Transform _PernaD;
 
-    [SerializeField] public bool _AtivaMovimento = true;
+    [SerializeField] public bool _AtivaMovimento;
     [SerializeField] private bool _checkGround;
     [SerializeField] private bool _isJumping;
     [SerializeField] private bool _ativaCorrida;
@@ -55,8 +55,8 @@ public class ControlaPlayer : MonoBehaviour
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
 
-        //StartCoroutine(AnimacaoInicial());
-        
+        StartCoroutine(AnimacaoInicial());
+
 
     }
 
@@ -65,10 +65,8 @@ public class ControlaPlayer : MonoBehaviour
 
         _checkGround = _player.isGrounded;
 
-        if (_AtivaMovimento == true)
-        {
-            MovimentoPlayer();
-        }
+        MovimentoPlayer();
+
 
         
         GravidadePlayer();
@@ -78,12 +76,24 @@ public class ControlaPlayer : MonoBehaviour
 
         _player.Move(_velocity * Time.deltaTime);
 
+
+        //Esse comando é só pra gente DEV. Poder destravar o jogador no inicio!
+        if(Input.GetKey(KeyCode.Space))
+        {
+            _AtivaMovimento = true;
+        }
+
+
     }
 
     public void SetMove(InputAction.CallbackContext context)
     {
+        if (_AtivaMovimento == true)
+        {
+            _move = context.ReadValue<Vector3>();
+        }
 
-        _move = context.ReadValue<Vector3>();        
+                  
 
     }
 
