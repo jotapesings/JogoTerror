@@ -20,12 +20,9 @@ public class PegaItem : MonoBehaviour
 
     [SerializeField] Animator _animPortaQuarto;
 
-    
-
     [Header("Variavel de Itens")]
     //Variavel para pegar Itens
     [SerializeField] public bool PegouItem;
-    [SerializeField] private bool SegurandoLanterna;
     [SerializeField] public bool EntregouItem;
     [SerializeField] bool _encostouItem;
     [SerializeField] bool _encostouLantera;
@@ -61,13 +58,6 @@ public class PegaItem : MonoBehaviour
         PegadorDeItens();
         EntregaDeItens();
         PegaLanterna();
-
-
-        if(SegurandoLanterna == true)
-        {
-            _gameControle._transformLanterna.position = _gameControle._mao.position;
-            _gameControle._transformLanterna.eulerAngles = _gameControle._mao.eulerAngles;
-        }
 
 
     }
@@ -205,13 +195,9 @@ public class PegaItem : MonoBehaviour
         if(value.performed && _encostouLantera == true)
         {
             
-            
             _audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
-            _gameControle._rig.weight = 1;
             _gameControle._lanterna._desativaGlobal = false;
-            SegurandoLanterna = true;
-
-            //_gameControle._objetoLanterna.SetActive(false);
+            _gameControle._objetoLanterna.SetActive(false);
             _gameControle._textoDosItens[0].gameObject.SetActive(false); ////Essa linha faz com que desapareça o texto Aperte "E"; 
 
 
