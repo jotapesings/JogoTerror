@@ -4,6 +4,9 @@ using System;
 
 public class MovimentoDino1 : MonoBehaviour
 {
+
+    public bool _ativadorDeInimigos;
+
     NavMeshAgent _agent;
     private static readonly System.Random random = new System.Random();
 
@@ -35,32 +38,40 @@ public class MovimentoDino1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
-
-        if (distanceToPlayer <= followDistance)
+        if(_ativadorDeInimigos == true)
         {
-            // Verifique se há um obstáculo entre o dinossauro e o jogador
-            if (!Physics.Linecast(transform.position, _player.position, obstacleMask))
+            float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
+
+            if (distanceToPlayer <= followDistance)
             {
-                _agent.SetDestination(_player.transform.position);
-                _agent.speed = _velocidadeDino1;
-                _ativaPatrulha = false;
+                // Verifique se há um obstáculo entre o dinossauro e o jogador
+                if (!Physics.Linecast(transform.position, _player.position, obstacleMask))
+                {
+                    _agent.SetDestination(_player.transform.position);
+                    _agent.speed = _velocidadeDino1;
+                    _ativaPatrulha = false;
+                }
+                else
+                {
+                    _ativaPatrulha = true;
+                }
             }
-            else
+            else if (distanceToPlayer > stopFollowDistance)
             {
                 _ativaPatrulha = true;
             }
+
+            if (_ativaPatrulha == true && _agent.remainingDistance < 20f)
+            {
+                _agent.SetDestination(_pos[index].position);
+                _agent.speed = 2.5f;
+            }
         }
-        else if (distanceToPlayer > stopFollowDistance)
+        else
         {
-            _ativaPatrulha = true;
+            _agent.speed = 0f;
         }
 
-        if (_ativaPatrulha == true && _agent.remainingDistance < 20f)
-        {
-            _agent.SetDestination(_pos[index].position);
-            _agent.speed = 2.5f;
-        }
 
     }
 

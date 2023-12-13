@@ -9,6 +9,9 @@ public class GameControle : MonoBehaviour
 {
 
 
+
+    
+
     public Rig _rigMao;
 
     public Lanterna _lanterna;
@@ -19,7 +22,6 @@ public class GameControle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         _lanterna = FindAnyObjectByType<Lanterna>();
         _lanterna._desativaGlobal = true;
     }
@@ -27,6 +29,7 @@ public class GameControle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         
     }
 }
