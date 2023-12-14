@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public class MovimentoDino1 : MonoBehaviour
 {
+
+    GameControle _gameControle;
+
     [SerializeField] Animator _anim;
     NavMeshAgent _agent;
     private static readonly System.Random random = new System.Random();
@@ -18,6 +23,7 @@ public class MovimentoDino1 : MonoBehaviour
 
     [SerializeField] float followDistance;
     [SerializeField] float stopFollowDistance;  // Distância para parar de seguir o jogador
+
 
     [SerializeField] LayerMask obstacleMask;  // Máscara para identificar obstáculos
 
@@ -35,9 +41,15 @@ public class MovimentoDino1 : MonoBehaviour
     [SerializeField] AudioSource _passos;
     [SerializeField] AudioSource _gritos;
 
+    [SerializeField] AudioClip _bibliotecaMusica;
+    bool _ativaAudio;
+
+
     // Start is called before the first frame update
     void Start()
     {
+
+        _gameControle = FindObjectOfType<GameControle>();
         _agent = GetComponent<NavMeshAgent>();
         index = random.Next(0, _pos.Length); //Randomiza a posicao o Dinossauro
         _agent.SetDestination(_pos[index].position);
@@ -49,7 +61,16 @@ public class MovimentoDino1 : MonoBehaviour
     {
         float targetSpeed = _agent.speed;
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref velocity, smoothTime);
-        _anim.SetFloat("InputX", currentSpeed);
+
+        if (_agent.velocity == Vector3.zero)
+        {
+            _anim.SetFloat("InputX", 0);
+        }
+        else
+        {
+            _anim.SetFloat("InputX", currentSpeed);
+        }
+
 
         float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
 
@@ -61,11 +82,14 @@ public class MovimentoDino1 : MonoBehaviour
                 _agent.SetDestination(_player.position);
                 _agent.speed = _velocidadeDino1;
                 _ativaPatrulha = false;
+
+
             }
             else
             {
                 _ativaPatrulha = true;
             }
+
         }
         else if (distanceToPlayer > stopFollowDistance)
         {
@@ -74,6 +98,7 @@ public class MovimentoDino1 : MonoBehaviour
 
         if (_ativaPatrulha && !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {
+
             tempoParado += Time.deltaTime;
 
             if (tempoParado >= intervaloParada)

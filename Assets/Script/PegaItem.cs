@@ -17,9 +17,6 @@ public class PegaItem : MonoBehaviour
 
     [SerializeField] Transform _item;
     [SerializeField] LayerMask[] SelecionaLayer;
-    [SerializeField] Rigidbody _itemGravidade;
-
-    [SerializeField] Animator _animPortaQuarto;
 
     [Header("Variavel de Itens")]
     //Variavel para pegar Itens
@@ -31,11 +28,6 @@ public class PegaItem : MonoBehaviour
     //Variavel Quantidade de Itens
     [SerializeField] GameObject[] _peca;
     [SerializeField] public int _qtdItem;
-
-    [Header("Variavel de Portas")]
-    //Variavel para Abri Portas
-    [SerializeField] bool _olhouPorta = false;
-    [SerializeField] bool _Porta = false;
 
     [Header("Variavel da Maquina")]
     //Variavel para Acessar a Maquina do Tempo
@@ -49,9 +41,9 @@ public class PegaItem : MonoBehaviour
 
     private void Start()
     {
-        _lanterna = FindAnyObjectByType<Lanterna>();
-        _gameControle = FindAnyObjectByType<GameControle>();
-        _audioControle = FindAnyObjectByType<ControlaAudio>();
+        _lanterna = FindObjectOfType<Lanterna>();
+        _gameControle = FindObjectOfType<GameControle>();
+        _audioControle = FindObjectOfType<ControlaAudio>();
     }
 
     // Update is called once per frame

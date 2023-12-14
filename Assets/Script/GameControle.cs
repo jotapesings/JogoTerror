@@ -10,7 +10,7 @@ public class GameControle : MonoBehaviour
 
 
 
-    
+    public AudioSource _musicaAmbiente;
 
     public Rig _rigMao;
 
@@ -22,7 +22,7 @@ public class GameControle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _lanterna = FindAnyObjectByType<Lanterna>();
+        _lanterna = FindObjectOfType<Lanterna>();
         _lanterna._desativaGlobal = true;
     }
 
