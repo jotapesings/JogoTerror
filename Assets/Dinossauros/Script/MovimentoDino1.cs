@@ -28,8 +28,12 @@ public class MovimentoDino1 : MonoBehaviour
     float velocity = 0f;
 
     float tempoParado = 0f;  // Contador para o tempo que o dinossauro está parado
-    float intervaloParada = 5f;  // O dinossauro vai parar a cada 5 segundos
+    float intervaloParada = 10f;  // O dinossauro vai parar a cada 5 segundos
     float duracaoParada = 2f;  // O dinossauro vai parar por 2 segundos
+
+
+    [SerializeField] AudioSource _passos;
+    [SerializeField] AudioSource _gritos;
 
     // Start is called before the first frame update
     void Start()
@@ -89,4 +93,11 @@ public class MovimentoDino1 : MonoBehaviour
             }
         }
     }
+
+
+    public void DinoPassos()
+    {
+        _passos.Play();
+    }
+
 }
