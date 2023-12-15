@@ -28,15 +28,8 @@ public class Menu : MonoBehaviour
     }
 
 
-
-    public void Creditos()
-    {
-
-    }
-
-
     public void Sair()
     {
-
+        Application.Quit();
     }
 }
