@@ -72,7 +72,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.4123639
+      - time: 0.30359197
         functionName: DinoPassos
         data: 
         objectReferenceParameter: {instanceID: 0}

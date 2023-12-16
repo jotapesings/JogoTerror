@@ -194,7 +194,7 @@ public class PegaItem : MonoBehaviour
             _lanterna._lanterna.intensity = 3;
 
 
-            _audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
+            //_audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
             _gameControle._lanterna._desativaGlobal = false;
             _gameControle._objetoLanterna.SetActive(false);
             _gameControle._textoDosItens[0].gameObject.SetActive(false); ////Essa linha faz com que desapareça o texto Aperte "E"; 

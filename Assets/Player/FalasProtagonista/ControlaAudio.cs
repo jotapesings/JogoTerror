@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class ControlaAudio : MonoBehaviour
 {
+ 
 
     [Header("Variavel do AudioAmbient")]
     [SerializeField] AudioSource _AmbientAudio;
+
     [Header("Variavel de Voz")]
-    [SerializeField] AudioSource _VozPlayer;
-    [SerializeField] AudioClip[] _BibliotecaVoz;
+    [SerializeField] public AudioSource _VozPlayer;
+    [SerializeField] public AudioClip[] _BibliotecaVoz;
+
+
 
 
     [Header("Variavel Global da Fala")]
@@ -21,7 +25,8 @@ public class ControlaAudio : MonoBehaviour
     {
         _AmbientAudio.Play();
 
-        StartCoroutine(IniciaFala1());
+        //StartCoroutine(IniciaFala1());
+
 
 
     }
@@ -32,22 +37,30 @@ public class ControlaAudio : MonoBehaviour
 
     }
 
-    IEnumerator IniciaFala1()
-    {
-        yield return new WaitForSeconds(1f);
-        _VozPlayer.PlayOneShot(_BibliotecaVoz[0]);
-        _ativaFala = true;
+
+    //IEnumerator IniciaFala1()
+    //{
+
+    //    if(_pulaAudio < _BibliotecaVoz.Length)
+    //    {
+    //        yield return new WaitForSeconds(1f);
+    //        _VozPlayer.PlayOneShot(_BibliotecaVoz[_pulaAudio]);
+  
+    //    }
 
 
-    }
 
-    public void IniciarFala3()
-    {
-        if(_ativaFala == true)
-        {
-            _VozPlayer.PlayOneShot(_BibliotecaVoz[1]);
-        }
+
+
+    //}
+
+    //public void IniciarFala3()
+    //{
+    //    if(_ativaFala == true)
+    //    {
+    //        _VozPlayer.PlayOneShot(_BibliotecaVoz[1]);
+    //    }
         
-    }
+    //}
 
 }

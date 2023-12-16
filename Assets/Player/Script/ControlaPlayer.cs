@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ControlaPlayer : MonoBehaviour
 {
+
+    [SerializeField] string sceneName;
+
+    [SerializeField] MovimentoDino2 _referenciaBocaDino;
+
+
+    [SerializeField] Image _morteImg;
+    [SerializeField] Color[] _cor;
 
     [SerializeField] Transform _pernaE;
     [SerializeField] Transform _PernaD;
@@ -47,11 +58,16 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] float _corrida;
 
 
+    [SerializeField] int vida;
 
-
+    [SerializeField] bool _gigantossauroMATAR;
+    [SerializeField] bool _velociraptoATACA =  true;
 
     void Awake()
     {
+        _velociraptoATACA = true;
+        _referenciaBocaDino = FindObjectOfType<MovimentoDino2>();
+
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
 
@@ -66,13 +82,9 @@ public class ControlaPlayer : MonoBehaviour
         _checkGround = _player.isGrounded;
 
         MovimentoPlayer();
-
-
-        
         GravidadePlayer();
         AnimaPlayer();
-
-
+        VidaDoJogador();
 
         _player.Move(_velocity * Time.deltaTime);
 
@@ -83,6 +95,27 @@ public class ControlaPlayer : MonoBehaviour
             _AtivaMovimento = true;
         }
 
+
+    }
+
+
+    public void VidaDoJogador()
+    {
+        if(vida < 0 && _gigantossauroMATAR == true)
+        {
+            
+            transform.DOMove(_referenciaBocaDino._referenciaBoca.position, .5f);
+            DOTween.Kill(transform);
+            
+        }
+
+        if(vida >= 4)
+        {
+            
+            vida = 4;
+        }
+
+        
 
     }
 
@@ -183,6 +216,56 @@ public class ControlaPlayer : MonoBehaviour
         _AtivaMovimento = false;
         yield return new WaitForSeconds(12f);
         _AtivaMovimento = true;
+    }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("velocrapto") && _velociraptoATACA == true)
+        {
+            StartCoroutine(TempoDeDano());
+        }
+
+        if(other.gameObject.CompareTag("gigantossauro"))
+        {
+            StartCoroutine(TempoDaMordidaGigantossauro(other.gameObject));
+        }
+
+    }
+
+
+    IEnumerator TempoDeDano()
+    {
+        _velociraptoATACA = false;
+        vida -= 3;
+        _morteImg.DOColor(_cor[0], 0.2f);
+        yield return new WaitForSeconds(1f);
+        DOTween.Kill(this);
+        StartCoroutine(CarregaGameOver());
+
+
+    }
+
+    IEnumerator TempoDaMordidaGigantossauro(GameObject value)
+    {
+        vida -= 3;
+        _gigantossauroMATAR = true;
+        _AtivaMovimento = false;
+        _morteImg.DOColor(_cor[0], 0.5f);
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(CarregaGameOver());
+
+
+
+    }
+
+    IEnumerator CarregaGameOver()
+    {
+        DOTween.Kill(transform);
+        DOTween.KillAll();
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(sceneName);
     }
 
 

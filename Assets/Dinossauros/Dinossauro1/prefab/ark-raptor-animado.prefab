@@ -394,7 +394,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6deebd7dfec4675449546a7b9bb11d28, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4408,11 +4408,11 @@ GameObject:
   - component: {fileID: 4994374881985176614}
   - component: {fileID: 8680517341068028197}
   - component: {fileID: 8099406124025212389}
-  - component: {fileID: -1813492445434831767}
   - component: {fileID: 673167039220844715}
+  - component: {fileID: 7935439328164435363}
   m_Layer: 0
   m_Name: ark-raptor-animado
-  m_TagString: Untagged
+  m_TagString: velocrapto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4493,8 +4493,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _passos: {fileID: 3493621737845439561}
-  _gritos: {fileID: 0}
-  _bibliotecaMusica: {fileID: 0}
 --- !u!54 &8099406124025212389
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4522,27 +4520,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!65 &-1813492445434831767
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7411299281331203317}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2.83, z: 2.93}
-  m_Center: {x: 0, y: 1.51, z: 0}
 --- !u!195 &673167039220844715
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4565,6 +4542,27 @@ NavMeshAgent:
   m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &7935439328164435363
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411299281331203317}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 3.03, z: 2.13}
+  m_Center: {x: 0, y: 1.64, z: 0.4}
 --- !u!1 &7437598405694963765
 GameObject:
   m_ObjectHideFlags: 0
