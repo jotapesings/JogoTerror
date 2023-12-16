@@ -14,6 +14,7 @@ public class ControlaPlayer : MonoBehaviour
 
     [SerializeField] MovimentoDino2 _referenciaBocaDino;
 
+    [SerializeField] public bool paraTUDO = false;
 
     [SerializeField] Image _morteImg;
     [SerializeField] Color[] _cor;
@@ -90,10 +91,12 @@ public class ControlaPlayer : MonoBehaviour
 
 
         //Esse comando é só pra gente DEV. Poder destravar o jogador no inicio!
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             _AtivaMovimento = true;
         }
+
+
 
 
     }

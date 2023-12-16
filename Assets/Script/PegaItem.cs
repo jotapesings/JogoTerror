@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PegaItem : MonoBehaviour
 {
+    [SerializeField] GameObject _folhaVirtual;
+    [SerializeField] GameObject _folhaReal;
 
     [SerializeField] GameControle _gameControle;
     [SerializeField] ControlaAudio _audioControle;
@@ -24,6 +26,7 @@ public class PegaItem : MonoBehaviour
     [SerializeField] public bool EntregouItem;
     [SerializeField] bool _encostouItem;
     [SerializeField] bool _encostouLantera;
+    [SerializeField] bool _encostouFolha;
 
     //Variavel Quantidade de Itens
     [SerializeField] GameObject[] _peca;
@@ -52,6 +55,7 @@ public class PegaItem : MonoBehaviour
         PegadorDeItens();
         EntregaDeItens();
         PegaLanterna();
+        PegaFolha();
 
 
     }
@@ -67,13 +71,11 @@ public class PegaItem : MonoBehaviour
             Debug.DrawLine(transform.position, PosicaoDoItem.point, Color.red);
 
             _encostouItem = true;
-           // Debug.Log("Encostou no Bloco");
 
         }
         else
         {
             _encostouItem = false;
-            //Debug.Log("Não está mais no Bloco");
         }
     }
 
@@ -100,6 +102,27 @@ public class PegaItem : MonoBehaviour
 
             //Essa linha faz com que desapareça o texto Aperte "E";
             _gameControle._textoDosItens[0].gameObject.SetActive(false);
+        }
+    }
+
+
+
+    void PegaFolha() //Pega Folha
+    {
+        RaycastHit PosicaoFolha;
+
+
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoFolha, 3, SelecionaLayer[3]))
+        {
+
+            Debug.DrawLine(transform.position, PosicaoFolha.point, Color.red);
+
+            _encostouFolha = true;
+
+        }
+        else
+        {
+            _encostouFolha = false;
         }
     }
 
@@ -200,6 +223,17 @@ public class PegaItem : MonoBehaviour
             _gameControle._textoDosItens[0].gameObject.SetActive(false); ////Essa linha faz com que desapareça o texto Aperte "E"; 
 
 
+        }
+
+        if(value.performed && _encostouFolha == true)
+        {
+            _folhaReal.SetActive(false);
+            _folhaVirtual.SetActive(true);
+        }
+
+        if(value.performed && _encostouFolha == false)
+        {
+            _folhaVirtual.SetActive(false);
         }
 
     }

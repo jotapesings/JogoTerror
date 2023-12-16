@@ -4,9 +4,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
 using TMPro;
+using Cinemachine;
 
 public class GameControle : MonoBehaviour
 {
+
+
+    [SerializeField] Cinemachine.CinemachineBrain _camera;
+    [SerializeField] ControlaPlayer _player;
+
+    [SerializeField] GameObject _panel;
+    [SerializeField] GameObject _panelMenu;
 
     MovimentoDino2 _ativador;
 
@@ -22,6 +30,8 @@ public class GameControle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        _player = FindAnyObjectByType<ControlaPlayer>();
         _ativador = FindObjectOfType<MovimentoDino2>();
         _lanterna = FindObjectOfType<Lanterna>();
         _lanterna._desativaGlobal = true;
@@ -32,7 +42,16 @@ public class GameControle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            _panel.SetActive(false);
+            _camera.enabled = false;
+            _player._AtivaMovimento = false;
+            _panelMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         
     }
 
@@ -42,4 +61,14 @@ public class GameControle : MonoBehaviour
         yield return new WaitForSeconds(60f);
         _ativador.ativaGigantossauro = true;
     }
+
+    public void DesabilidaPause()
+    {
+        Time.timeScale = 1;
+        _player._AtivaMovimento = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+
 }
