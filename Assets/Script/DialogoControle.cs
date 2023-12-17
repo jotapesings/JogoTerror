@@ -26,6 +26,7 @@ public class DialogoControle : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("desativa", true ? 1 : 0);
         StartCoroutine(DialogoDaHistoria());
         
     }
@@ -54,6 +55,10 @@ public class DialogoControle : MonoBehaviour
 
     }
 
+    public void avancaCenaHistoria()
+    {
+        StartCoroutine(CarregarCena());
+    }
 
     IEnumerator CarregarCena() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
     {

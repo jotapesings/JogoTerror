@@ -20,16 +20,31 @@ public class Dialogo : MonoBehaviour
     [SerializeField] int indexDica;
 
 
+    [SerializeField] bool desativaDialogo;
+
 
     private void Awake()
     {
+        //desativaDialogo = PlayerPrefs.GetInt("desativa") == 1 ? true : false;
         _audioPlayer = FindObjectOfType<ControlaAudio>();
     }
 
     private void Start()
     {
-        StartCoroutine(TempoDialogoPlayerInicio());
-        //StartCoroutine(TempoDicaDoJogo());
+        if (desativaDialogo == true)
+        {
+            StartCoroutine(TempoDialogoPlayerInicio());
+            //StartCoroutine(TempoDicaDoJogo());
+        }
+    }
+
+
+    private void Update()
+    {
+        
+
+
+
     }
 
     IEnumerator TempoDialogoPlayerInicio()
@@ -45,6 +60,8 @@ public class Dialogo : MonoBehaviour
             yield return new WaitForSeconds(1f); // Espera antes de desaparecer
             yield return _objectText.DOFade(0, 1f).WaitForCompletion(); // Faz o texto desaparecer
         }
+
+        StartCoroutine(TempoDicaDoJogo());
 
     }
 

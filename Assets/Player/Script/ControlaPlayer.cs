@@ -16,9 +16,6 @@ public class ControlaPlayer : MonoBehaviour
 
     [SerializeField] public bool paraTUDO = false;
 
-    [SerializeField] Image _morteImg;
-    [SerializeField] Color[] _cor;
-
     [SerializeField] Transform _pernaE;
     [SerializeField] Transform _PernaD;
 
@@ -59,20 +56,20 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] float _corrida;
 
 
-    [SerializeField] int vida;
-
-    [SerializeField] bool _gigantossauroMATAR;
-    [SerializeField] bool _velociraptoATACA =  true;
+    [SerializeField] GameObject _morte;
+    [SerializeField] AudioSource _danoAudio;
+    [SerializeField] public int vida;
+    [SerializeField] Image _fechaImage;
+    [SerializeField] Color _cor;
 
     void Awake()
     {
-        _velociraptoATACA = true;
         _referenciaBocaDino = FindObjectOfType<MovimentoDino2>();
 
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
 
-        StartCoroutine(AnimacaoInicial());
+        //StartCoroutine(AnimacaoInicial());
 
 
     }
@@ -104,18 +101,19 @@ public class ControlaPlayer : MonoBehaviour
 
     public void VidaDoJogador()
     {
-        if(vida < 0 && _gigantossauroMATAR == true)
+
+
+        if(vida <= 0)
         {
-            
-            transform.DOMove(_referenciaBocaDino._referenciaBoca.position, .5f);
-            DOTween.Kill(transform);
-            
+            _AtivaMovimento = false;
+            _fechaImage.DOColor(_cor, 1f);
+
         }
 
-        if(vida >= 4)
+        if(vida >= 3)
         {
             
-            vida = 4;
+            vida = 3;
         }
 
         
@@ -225,14 +223,14 @@ public class ControlaPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("velocrapto") && _velociraptoATACA == true)
+        if(other.gameObject.CompareTag("velocrapto"))
         {
             StartCoroutine(TempoDeDano());
         }
 
         if(other.gameObject.CompareTag("gigantossauro"))
         {
-            StartCoroutine(TempoDaMordidaGigantossauro(other.gameObject));
+            StartCoroutine(TempoDaMordidaGigantossauro());
         }
 
     }
@@ -240,35 +238,26 @@ public class ControlaPlayer : MonoBehaviour
 
     IEnumerator TempoDeDano()
     {
-        _velociraptoATACA = false;
-        vida -= 3;
-        _morteImg.DOColor(_cor[0], 0.2f);
-        yield return new WaitForSeconds(1f);
-        DOTween.Kill(this);
-        StartCoroutine(CarregaGameOver());
+        vida -= 1;
+        _morte.SetActive(true);
+        _danoAudio.Play();
+        yield return new WaitForSeconds(.5f);
+        _morte.SetActive(false);
+
 
 
     }
 
-    IEnumerator TempoDaMordidaGigantossauro(GameObject value)
+    IEnumerator TempoDaMordidaGigantossauro()
     {
-        vida -= 3;
-        _gigantossauroMATAR = true;
-        _AtivaMovimento = false;
-        _morteImg.DOColor(_cor[0], 0.5f);
+
+        _morte.SetActive(true);
+        _danoAudio.Play();
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(CarregaGameOver());
+        vida -= 3;
 
 
 
-    }
-
-    IEnumerator CarregaGameOver()
-    {
-        DOTween.Kill(transform);
-        DOTween.KillAll();
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(sceneName);
     }
 
 

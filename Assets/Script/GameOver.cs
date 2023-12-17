@@ -6,23 +6,48 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
 
+
+
+    [SerializeField] ControlaPlayer _vidaJogador;
+    [SerializeField] GameObject _panelGameOver;
+    [SerializeField] GameObject _panel;
+
+
+
+
     private void Start()
     {
+
+        PlayerPrefs.SetInt("desativa", false ? 1 : 0);
+
+        _vidaJogador = FindObjectOfType<ControlaPlayer>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
-    [SerializeField] string[] cena;
 
 
-    public void reiniciar()
+    private void Update()
     {
-        StartCoroutine(CarregarCena());
+        if(_vidaJogador.vida <= 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            StartCoroutine(TempoGameOver());
+        }
     }
+
+    public void reiniciar(string sceneName)
+    {
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
 
     public void menu()
     {
-        SceneManager.LoadScene(cena[1]);
+        SceneManager.LoadScene("Menu");
     }
 
     public void sair()
@@ -31,16 +56,25 @@ public class GameOver : MonoBehaviour
     }
 
 
-    IEnumerator CarregarCena() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
+    IEnumerator TempoGameOver()
     {
-        yield return new WaitForSeconds(1f);
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(cena[0]);
-        yield return null;
-        //while (!asyncOperation.isDone)
-        //{
-        //    this.barraProgresso.value = asyncOperation.progress;
-        //    yield return null;
-        //}
+        yield return new WaitForSeconds(2f);
+        _panel.SetActive(false);
+        Time.timeScale = 0;
+        _panelGameOver.SetActive(true);
     }
+
+    //IEnumerator CarregaMenu() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
+    //{
+
+    //    yield return new WaitForSeconds(1f);
+    //    AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Menu");
+    //    yield return null;
+    //    while (!asyncOperation.isDone)
+    //    {
+    //       //this.barraProgresso.value = asyncOperation.progress;
+    //       yield return null;
+    //    }
+    //}
 
 }

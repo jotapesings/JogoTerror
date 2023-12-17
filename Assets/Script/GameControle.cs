@@ -12,6 +12,8 @@ public class GameControle : MonoBehaviour
 
     [SerializeField] Cinemachine.CinemachineBrain _camera;
     [SerializeField] ControlaPlayer _player;
+    
+
 
     [SerializeField] GameObject _panel;
     [SerializeField] GameObject _panelMenu;
@@ -24,7 +26,6 @@ public class GameControle : MonoBehaviour
 
     public Lanterna _lanterna;
     public GameObject _objetoLanterna;
-    public TMP_Text[] _textoDosItens;
 
 
     // Start is called before the first frame update
@@ -42,15 +43,13 @@ public class GameControle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && _player.vida >= 1)
         {
             Time.timeScale = 0;
             _panel.SetActive(false);
             _camera.enabled = false;
             _player._AtivaMovimento = false;
             _panelMenu.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         }
         
     }

@@ -52,4 +52,11 @@ public class ResolucaoEGraficos : MonoBehaviour
     {
         Screen.SetResolution(3840, 2160, true);
     }
+
+
+    public void SairCasoPrecise()
+    {
+        Application.Quit();
+    }
+
 }

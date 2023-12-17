@@ -6,8 +6,11 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
 
-    [Header("Variavel para Pular a Cena")]
-    public string proximaFase;
+
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
 
     public void  Iniciar()
     {
@@ -17,14 +20,14 @@ public class Menu : MonoBehaviour
 
     IEnumerator CarregarCena() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
     {
-        yield return new WaitForSeconds(1f);
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(proximaFase);
+        yield return new WaitForSeconds(.5f);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Inicio");
         yield return null;
-        //while (!asyncOperation.isDone)
-        //{
-        //    this.barraProgresso.value = asyncOperation.progress;
-        //    yield return null;
-        //}
+        while (!asyncOperation.isDone)
+        {
+            //this.barraProgresso.value = asyncOperation.progress;
+            yield return null;
+        }
     }
 
 
