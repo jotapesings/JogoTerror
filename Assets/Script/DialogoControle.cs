@@ -17,17 +17,19 @@ public class DialogoControle : MonoBehaviour
     [SerializeField] int index;
     [SerializeField] private float _tempoDialogo;
 
-    //[Header("Variaveis do Dialogo do Objetivo")]
-    //[SerializeField] GameObject _text2;
-    //[SerializeField] TMP_Text _speechText2;
-    //[SerializeField] string[] _caixaDialogo2;
-    //[SerializeField] int index2;
+
 
 
     private void Start()
     {
         PlayerPrefs.SetInt("desativa", true ? 1 : 0);
+
         StartCoroutine(DialogoDaHistoria());
+        
+    }
+
+    private void Update()
+    {
         
     }
 
@@ -48,10 +50,7 @@ public class DialogoControle : MonoBehaviour
         {
             index += 1;
             yield return DialogoDaHistoria();
-        }
-
-        StartCoroutine(CarregarCena());
-        
+        }        
 
     }
 
@@ -65,21 +64,7 @@ public class DialogoControle : MonoBehaviour
         yield return new WaitForSeconds(1f);
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(proximaFase);
         yield return null;
-        //while (!asyncOperation.isDone)
-        //{
-        //    this.barraProgresso.value = asyncOperation.progress;
-        //    yield return null;
-        //}
     }
 
-    //IEnumerator DialogoLetrasObjetivo()
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    _speechText2.text = _caixaDialogo2[index2];
-    //    index2 += 1;
-    //    yield return new WaitForSeconds(5f);
-    //    _speechText2.text = null;
-        
-    //}
 
 }

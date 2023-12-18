@@ -31,6 +31,10 @@ public class Dialogo : MonoBehaviour
 
     private void Start()
     {
+        
+
+        
+
         if (desativaDialogo == true)
         {
             StartCoroutine(TempoDialogoPlayerInicio());

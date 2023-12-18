@@ -14,6 +14,11 @@ public class Menu : MonoBehaviour
 
     public void  Iniciar()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        PlayerPrefs.SetInt("desativa", true ? 1 : 0);
+
         StartCoroutine(CarregarCena());
     }
 

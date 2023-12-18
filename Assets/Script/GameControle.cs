@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class GameControle : MonoBehaviour
 {
 
+    [SerializeField] GameObject _mapa;
 
     [SerializeField] Cinemachine.CinemachineBrain _camera;
     [SerializeField] ControlaPlayer _player;
@@ -30,6 +31,8 @@ public class GameControle : MonoBehaviour
     public GameObject _objetoLanterna;
 
 
+    bool mapa_ativa;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +51,7 @@ public class GameControle : MonoBehaviour
     {
         AjusteSensibilidadeMouse();
 
-        if (Input.GetKeyDown(KeyCode.Escape) && _player.vida >= 1)
+        if (Input.GetKeyDown(KeyCode.Escape) && _player.vida >= 1 && mapa_ativa == false)
         {
             Time.timeScale = 0;
             _panel.SetActive(false);
@@ -56,7 +59,23 @@ public class GameControle : MonoBehaviour
             _player._AtivaMovimento = false;
             _panelMenu.SetActive(true);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            mapa_ativa = true;
+            _mapa.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            mapa_ativa = false;
+            _mapa.SetActive(false);
+            
+        }
+
+
     }
 
 
