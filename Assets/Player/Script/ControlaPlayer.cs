@@ -60,12 +60,16 @@ public class ControlaPlayer : MonoBehaviour
 
 
     [SerializeField] GameObject _morte;
+
     [SerializeField] AudioSource _danoAudio;
+    [SerializeField] AudioSource _danoVoz;
+    [SerializeField] AudioClip[] _bibliotecaDano;
+
     [SerializeField] public int vida;
     [SerializeField] Image _fechaImage;
     [SerializeField] Color[] _cor;
 
-
+    [SerializeField] bool ativaSomDano;
     
 
     void Awake()
@@ -78,6 +82,11 @@ public class ControlaPlayer : MonoBehaviour
         //StartCoroutine(AnimacaoInicial());
 
 
+    }
+
+    private void Start()
+    {
+        ativaSomDano = false;
     }
 
     void Update()
@@ -228,7 +237,7 @@ public class ControlaPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("velocrapto"))
+        if(other.gameObject.CompareTag("velocrapto") && ativaSomDano == false)
         {
             StartCoroutine(TempoDeDano());
         }
@@ -245,9 +254,12 @@ public class ControlaPlayer : MonoBehaviour
     {
         vida -= 1;
         _morte.SetActive(true);
+        _danoVoz.PlayOneShot((_bibliotecaDano[Random.Range(0, _bibliotecaDano.Length)]));
         _danoAudio.Play();
+        ativaSomDano = true;
         yield return new WaitForSeconds(.5f);
         _morte.SetActive(false);
+        ativaSomDano = false;
 
 
 
