@@ -10,6 +10,9 @@ using UnityEngine.SceneManagement;
 public class ControlaPlayer : MonoBehaviour
 {
 
+
+    [SerializeField] Transform _posicaoFinalJogador;
+
     [SerializeField] string sceneName;
 
     [SerializeField] MovimentoDino2 _referenciaBocaDino;
@@ -60,7 +63,10 @@ public class ControlaPlayer : MonoBehaviour
     [SerializeField] AudioSource _danoAudio;
     [SerializeField] public int vida;
     [SerializeField] Image _fechaImage;
-    [SerializeField] Color _cor;
+    [SerializeField] Color[] _cor;
+
+
+    
 
     void Awake()
     {
@@ -94,9 +100,8 @@ public class ControlaPlayer : MonoBehaviour
         }
 
 
-
-
     }
+
 
 
     public void VidaDoJogador()
@@ -106,7 +111,7 @@ public class ControlaPlayer : MonoBehaviour
         if(vida <= 0)
         {
             _AtivaMovimento = false;
-            _fechaImage.DOColor(_cor, 1f);
+            _fechaImage.DOColor(_cor[0], 1f);
 
         }
 
@@ -260,5 +265,28 @@ public class ControlaPlayer : MonoBehaviour
 
     }
 
+
+    public IEnumerator TempoFimJogo()
+    {
+        _AtivaMovimento = false;
+        yield return new WaitForSeconds(1f);
+        _fechaImage.DOColor(_cor[0], 2f);
+        yield return new WaitForSeconds(3f);
+        transform.position = _posicaoFinalJogador.position;
+        _fechaImage.DOColor(_cor[1], 2f);
+        _AtivaMovimento = true;
+        yield return new WaitForSeconds(1f);
+    }
+
+
+    public IEnumerator TempoRelogio()
+    {
+        _AtivaMovimento = false;
+        yield return new WaitForSeconds(1f);
+        _fechaImage.DOColor(_cor[0], 2f);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("FimDoJogo");
+
+    }
 
 }

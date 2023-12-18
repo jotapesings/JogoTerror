@@ -9,6 +9,8 @@ TagManager:
   - posicao
   - velocrapto
   - gigantossauro
+  - ovos
+  - relogio
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Player
   - Item
   - Lanterna
-  - Maquina
+  - Ovos
   - PP
   - Interage
   - posicao

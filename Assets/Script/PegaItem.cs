@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PegaItem : MonoBehaviour
 {
+
+    [SerializeField] RandomOvo _ativaRandoOvos;
+
+
+    [SerializeField] GameObject _ImageOvo;
+
     [SerializeField] GameObject _folhaVirtual;
     [SerializeField] GameObject _folhaReal;
 
@@ -16,17 +23,24 @@ public class PegaItem : MonoBehaviour
 
     [SerializeField] LayerMask[] SelecionaLayer;
 
+    [SerializeField] RaycastHit PosicaoOvos;
+    [SerializeField] RaycastHit PosicaoRelogio;
+
     [Header("Variavel de Itens")]
     //Variavel para pegar Itens
     [SerializeField] bool _encostouLantera;
     [SerializeField] bool _encostouFolha;
+    [SerializeField] bool _encostouOvos;
+    [SerializeField] bool _encostouRelogio;
 
     [Header("Raycast Objetos")]
     [SerializeField] Transform _objeto;
-
+    
+    public int qtd_ovos = 3;
 
     private void Start()
     {
+        _ativaRandoOvos = FindObjectOfType<RandomOvo>();
         _lanterna = FindObjectOfType<Lanterna>();
         _gameControle = FindObjectOfType<GameControle>();
         _audioControle = FindObjectOfType<ControlaAudio>();
@@ -37,12 +51,59 @@ public class PegaItem : MonoBehaviour
     {
         PegaLanterna();
         PegaFolha();
+        PegaOvos();
+
+
+        if(qtd_ovos == 0)
+        {
+            PegaRelogio();
+        }
+
+    }
+
+    void PegaOvos() //Pega Ovos
+    {
+
+        if(Physics.Raycast(transform.position, transform.forward, out PosicaoOvos, 4))
+        {
+
+            Debug.DrawLine(transform.position, PosicaoRelogio.point, Color.blue);
+
+            if (PosicaoOvos.transform.CompareTag("ovos"))
+            {
+
+                _encostouOvos = true;
+            }
+            else
+            {
+                _encostouOvos = false;
+            }
+        }
 
 
     }
 
 
-    void PegaLanterna()
+    void PegaRelogio() //Toca Relogio
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoRelogio, 4))
+        {
+
+            Debug.DrawLine(transform.position, PosicaoRelogio.point, Color.blue);
+
+            if (PosicaoRelogio.transform.CompareTag("relogio"))
+            {
+                _encostouRelogio = true;
+            }
+            else
+            {
+                _encostouRelogio = false;
+            }
+        }
+    }
+
+
+    void PegaLanterna() //Pega Lanterna
     {
         RaycastHit PosicaoDaLanterna;
         
@@ -79,12 +140,17 @@ public class PegaItem : MonoBehaviour
 
             _encostouFolha = true;
 
+
+
         }
         else
         {
             _encostouFolha = false;
         }
     }
+
+
+
 
 
 
@@ -111,13 +177,36 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouFolha == true)
         {
+            _ImageOvo.SetActive(true);
             _folhaReal.SetActive(false);
             _folhaVirtual.SetActive(true);
-        }
+            _ativaRandoOvos._ativaOvos = true;
 
+        }
         if(value.performed && _encostouFolha == false)
         {
             _folhaVirtual.SetActive(false);
+        }
+
+        if(value.performed && _encostouOvos == true)
+        {
+            qtd_ovos -= 1;
+            PosicaoOvos.transform.gameObject.SetActive(false);
+            _encostouOvos = false;
+        }
+
+        if (value.canceled && _encostouOvos == false)
+        {
+            _encostouOvos = false;
+        }
+
+        if(value.performed && _encostouRelogio == true)
+        {
+
+            _player.StartCoroutine(_player.TempoRelogio());
+            _encostouRelogio = false;
+
+
         }
 
     }

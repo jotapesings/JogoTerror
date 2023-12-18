@@ -7,13 +7,13 @@ public class Opacidade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartFadeOut(50f);
+        StartFadeOut(150f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 

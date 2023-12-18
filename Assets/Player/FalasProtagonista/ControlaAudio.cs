@@ -20,10 +20,14 @@ public class ControlaAudio : MonoBehaviour
     [SerializeField] public bool _ativaFala;
 
 
+    private void Awake()
+    {
+        _AmbientAudio.Play();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _AmbientAudio.Play();
 
         //StartCoroutine(IniciaFala1());
 
@@ -36,7 +40,6 @@ public class ControlaAudio : MonoBehaviour
     {
 
     }
-
 
     //IEnumerator IniciaFala1()
     //{

@@ -25,7 +25,7 @@ public class Dialogo : MonoBehaviour
 
     private void Awake()
     {
-        //desativaDialogo = PlayerPrefs.GetInt("desativa") == 1 ? true : false;
+        desativaDialogo = PlayerPrefs.GetInt("desativa") == 1 ? true : false;
         _audioPlayer = FindObjectOfType<ControlaAudio>();
     }
 

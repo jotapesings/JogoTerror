@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Animations.Rigging;
 using TMPro;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class GameControle : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class GameControle : MonoBehaviour
 
     [SerializeField] Cinemachine.CinemachineBrain _camera;
     [SerializeField] ControlaPlayer _player;
-    
 
+    [SerializeField] CinemachineVirtualCamera vcam;
+    [SerializeField] Slider _barraSliderSensibilidadeMouse;
 
     [SerializeField] GameObject _panel;
     [SerializeField] GameObject _panelMenu;
@@ -31,7 +33,8 @@ public class GameControle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _barraSliderSensibilidadeMouse.value = PlayerPrefs.GetFloat("mouseSensibilidade");
+
         _player = FindAnyObjectByType<ControlaPlayer>();
         _ativador = FindObjectOfType<MovimentoDino2>();
         _lanterna = FindObjectOfType<Lanterna>();
@@ -43,7 +46,9 @@ public class GameControle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && _player.vida >= 1)
+        AjusteSensibilidadeMouse();
+
+        if (Input.GetKeyDown(KeyCode.Escape) && _player.vida >= 1)
         {
             Time.timeScale = 0;
             _panel.SetActive(false);
@@ -54,6 +59,22 @@ public class GameControle : MonoBehaviour
         
     }
 
+
+    public void AjusteSensibilidadeMouse()
+    {
+        // Obtenha a referência para o componente CinemachinePOV
+        CinemachinePOV pov = vcam.GetCinemachineComponent<CinemachinePOV>();
+
+        // Ajuste as propriedades de velocidade com base na sensibilidade do mouse
+
+
+        pov.m_HorizontalAxis.m_MaxSpeed = _barraSliderSensibilidadeMouse.value;
+        pov.m_VerticalAxis.m_MaxSpeed = _barraSliderSensibilidadeMouse.value;
+
+        PlayerPrefs.SetFloat("mouseSensibilidade", _barraSliderSensibilidadeMouse.value);
+        
+
+    }
 
     IEnumerator AtivaGigantossauro()
     {
