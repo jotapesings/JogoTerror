@@ -8,6 +8,7 @@ public class Dialogo : MonoBehaviour
 {
 
     [SerializeField] ControlaAudio _audioPlayer;
+    [SerializeField] AudioSource _soundMission;
 
     [SerializeField] Text _objectText;
     [SerializeField] float _duration;
@@ -71,9 +72,11 @@ public class Dialogo : MonoBehaviour
 
     IEnumerator TempoDicaDoJogo()
     {
+        
         yield return new WaitForSeconds(_durationEntreTexto);
         _objectText.text = ""; // Limpa o texto
         _objectText.DOFade(1, 0.1f); // Garante que o texto esteja visível
+        _soundMission.Play();
         yield return _objectText.text = _textoDicaDoJogo[indexDica];
         //yield return _objectText.DOText(_textoDicaDoJogo[indexDica], _duration).WaitForCompletion(); // Anima o texto
         yield return new WaitForSeconds(15f); // Espera antes de desaparecer

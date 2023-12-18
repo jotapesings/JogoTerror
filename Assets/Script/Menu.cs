@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour
     IEnumerator CarregarCena() //Carrega a Cena só quando o jogo carregar no PC da pessoa!
     {
         yield return new WaitForSeconds(.5f);
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Inicio");
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Tutorial");
         yield return null;
         while (!asyncOperation.isDone)
         {

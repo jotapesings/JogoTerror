@@ -14,6 +14,19 @@ public class SliderBarSave : MonoBehaviour
     private void Start()
     {
         _sliderSensibilidadeMouse.value = PlayerPrefs.GetFloat("mouseSensibilidade");
+
+
+        if (_sliderSensibilidadeMouse.value != 300f)
+        {
+            Debug.Log("Sensibilidade não foi modificada");
+            _sliderSensibilidadeMouse.value = PlayerPrefs.GetFloat("mouseSensibilidade");
+        }
+        
+        if (_sliderSensibilidadeMouse.value == 300f)
+        {
+            Debug.Log("Sensibilidade é Igual a 300f");
+            _sliderSensibilidadeMouse.value = 300f;
+        }
     }
 
     private void Update()
