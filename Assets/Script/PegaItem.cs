@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class PegaItem : MonoBehaviour
 {
 
+
+    [SerializeField] AudioSource _itemCollectionSound;
+    [SerializeField] AudioSource _soundPapel;
+
     [SerializeField] RelogioDialogo _ativaDialogoRelogio;
 
     [SerializeField] RandomOvo _ativaRandoOvos;
@@ -179,8 +183,7 @@ public class PegaItem : MonoBehaviour
             _gameControle._rigMao.weight = 1;
             _lanterna.ativaL = true;
             _lanterna._lanterna.intensity = 3;
-
-
+            _itemCollectionSound.Play();
             //_audioControle.IniciarFala3(); //Essa linha ativa uma Fala;
             _gameControle._lanterna._desativaGlobal = false;
             _gameControle._objetoLanterna.SetActive(false);
@@ -191,6 +194,7 @@ public class PegaItem : MonoBehaviour
         if(value.performed && _encostouFolha == true)
         {
             _ImageOvo.SetActive(true);
+            _soundPapel.Play();
             _textDialogoPapel._ativaDialogoPapel = true;
             _folhaReal.SetActive(false);
             _ativaRandoOvos._ativaOvos = true;
@@ -200,8 +204,14 @@ public class PegaItem : MonoBehaviour
         if(value.performed && _encostouOvos == true)
         {
             qtd_ovos -= 1;
+            _itemCollectionSound.Play();
             _textDialogoDosOvos.continuar = true;
             _textDialogoDosOvos.StartCoroutine(_textDialogoDosOvos.DialogoOvo());
+            if(qtd_ovos <= 0)
+            {
+                _textDialogoDosOvos.continuar = false;
+                _textDialogoDosOvos.StartCoroutine(_textDialogoDosOvos.OutraCorroutina());
+            }
             PosicaoOvos.transform.gameObject.SetActive(false);
             _encostouOvos = false;
         }

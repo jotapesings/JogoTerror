@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class FimDoJogo : MonoBehaviour
 {
 
+    [SerializeField] AudioSource _distorcaoTemporal;
+
     [SerializeField] ControlaPlayer _playerFim;
 
     [SerializeField] PegaItem _qtd_de_ovos;
@@ -32,6 +34,7 @@ public class FimDoJogo : MonoBehaviour
         if (_qtd_de_ovos.qtd_ovos == 0 && ativaFim == false)
         {
             StartCoroutine(_playerFim.TempoFimJogo());
+            _distorcaoTemporal.Play();
             _imageOvo2.SetActive(false);
             ativaFim = true;
         }

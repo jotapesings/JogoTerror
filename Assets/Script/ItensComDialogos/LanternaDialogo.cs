@@ -7,6 +7,10 @@ using DG.Tweening;
 public class LanternaDialogo : MonoBehaviour
 {
 
+
+    [SerializeField] AudioSource _vozInteragivel;
+    [SerializeField] AudioClip[] _audioSelecionado;
+
     [SerializeField] Text _dialogoLanterna;
     [SerializeField] string[] _textoDialogoLanterna;
 
@@ -42,6 +46,7 @@ public class LanternaDialogo : MonoBehaviour
             _dialogoLanterna.text = ""; // Limpa o texto
             _dialogoLanterna.DOFade(1, 0.1f); // Garante que o texto esteja visível
             _dialogoLanterna.DOText(_textoDialogoLanterna[contador], 2f);
+            _vozInteragivel.PlayOneShot(_audioSelecionado[contador]);
             yield return new WaitForSeconds(3f);
             yield return _dialogoLanterna.DOFade(0, 1f).WaitForCompletion(); // Faz o texto desaparecer
 

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class ControlaPlayer : MonoBehaviour
 {
-
+    [SerializeField] AudioSource _distorcaoTemporal;
 
     [SerializeField] Transform _posicaoFinalJogador;
 
@@ -294,7 +294,8 @@ public class ControlaPlayer : MonoBehaviour
         _AtivaMovimento = false;
         yield return new WaitForSeconds(8f);
         _fechaImage.DOColor(_cor[0], 5f);
-        yield return new WaitForSeconds(5f);
+        _distorcaoTemporal.Play();
+        yield return new WaitForSeconds(6f);
         SceneManager.LoadScene("FimDoJogo");
 
     }
