@@ -7,6 +7,8 @@ public class MovimentoDino2 : MonoBehaviour
 {
 
 
+
+
     [SerializeField] public bool ativaGigantossauro;
 
     [SerializeField] AudioSource _passosG;

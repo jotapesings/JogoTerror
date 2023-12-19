@@ -7,17 +7,21 @@ using UnityEngine.UI;
 public class PegaItem : MonoBehaviour
 {
 
-    [SerializeField] RandomOvo _ativaRandoOvos;
+    [SerializeField] RelogioDialogo _ativaDialogoRelogio;
 
+    [SerializeField] RandomOvo _ativaRandoOvos;
+    [SerializeField] OvosDialogos _textDialogoDosOvos;
 
     [SerializeField] GameObject _ImageOvo;
 
-    [SerializeField] GameObject _folhaVirtual;
     [SerializeField] GameObject _folhaReal;
+    [SerializeField] PapelDialogO _textDialogoPapel;
 
     [SerializeField] GameControle _gameControle;
     [SerializeField] ControlaAudio _audioControle;
+
     [SerializeField] Lanterna _lanterna;
+    [SerializeField] LanternaDialogo _textDialogoLanterna;
 
     [SerializeField] ControlaPlayer _player;
 
@@ -25,6 +29,7 @@ public class PegaItem : MonoBehaviour
 
     [SerializeField] RaycastHit PosicaoOvos;
     [SerializeField] RaycastHit PosicaoRelogio;
+
 
     [Header("Variavel de Itens")]
     //Variavel para pegar Itens
@@ -40,6 +45,10 @@ public class PegaItem : MonoBehaviour
 
     private void Start()
     {
+        _ativaDialogoRelogio = FindObjectOfType<RelogioDialogo>();
+        _textDialogoDosOvos = FindObjectOfType<OvosDialogos>();
+        _textDialogoPapel = FindObjectOfType<PapelDialogO>();
+        _textDialogoLanterna = FindObjectOfType<LanternaDialogo>();
         _ativaRandoOvos = FindObjectOfType<RandomOvo>();
         _lanterna = FindObjectOfType<Lanterna>();
         _gameControle = FindObjectOfType<GameControle>();
@@ -64,10 +73,10 @@ public class PegaItem : MonoBehaviour
     void PegaOvos() //Pega Ovos
     {
 
-        if(Physics.Raycast(transform.position, transform.forward, out PosicaoOvos, 4))
+        if (Physics.Raycast(transform.position, transform.forward, out PosicaoOvos, 4))
         {
 
-            Debug.DrawLine(transform.position, PosicaoRelogio.point, Color.blue);
+            Debug.DrawRay(transform.position, PosicaoOvos.point, Color.blue);
 
             if (PosicaoOvos.transform.CompareTag("ovos"))
             {
@@ -86,10 +95,13 @@ public class PegaItem : MonoBehaviour
 
     void PegaRelogio() //Toca Relogio
     {
+
+        
+
         if (Physics.Raycast(transform.position, transform.forward, out PosicaoRelogio, 4))
         {
 
-            Debug.DrawLine(transform.position, PosicaoRelogio.point, Color.blue);
+            Debug.DrawRay(transform.position, PosicaoRelogio.point, Color.blue);
 
             if (PosicaoRelogio.transform.CompareTag("relogio"))
             {
@@ -111,7 +123,7 @@ public class PegaItem : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out PosicaoDaLanterna, 2, SelecionaLayer[2]))
         {
 
-            Debug.DrawLine(transform.position, PosicaoDaLanterna.point, Color.red);
+            Debug.DrawRay(transform.position, PosicaoDaLanterna.point, Color.red);
 
             _encostouLantera = true;
 
@@ -136,7 +148,7 @@ public class PegaItem : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out PosicaoFolha, 3, SelecionaLayer[3]))
         {
 
-            Debug.DrawLine(transform.position, PosicaoFolha.point, Color.red);
+            Debug.DrawRay(transform.position, PosicaoFolha.point, Color.red);
 
             _encostouFolha = true;
 
@@ -162,6 +174,7 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouLantera == true)
         {
+            _textDialogoLanterna._ativaDialogoLanterna = true;
             //Levanta a mão, ativa a Lanterna e sua Luz.
             _gameControle._rigMao.weight = 1;
             _lanterna.ativaL = true;
@@ -178,19 +191,17 @@ public class PegaItem : MonoBehaviour
         if(value.performed && _encostouFolha == true)
         {
             _ImageOvo.SetActive(true);
+            _textDialogoPapel._ativaDialogoPapel = true;
             _folhaReal.SetActive(false);
-            _folhaVirtual.SetActive(true);
             _ativaRandoOvos._ativaOvos = true;
 
-        }
-        if(value.performed && _encostouFolha == false)
-        {
-            _folhaVirtual.SetActive(false);
         }
 
         if(value.performed && _encostouOvos == true)
         {
             qtd_ovos -= 1;
+            _textDialogoDosOvos.continuar = true;
+            _textDialogoDosOvos.StartCoroutine(_textDialogoDosOvos.DialogoOvo());
             PosicaoOvos.transform.gameObject.SetActive(false);
             _encostouOvos = false;
         }
@@ -202,11 +213,15 @@ public class PegaItem : MonoBehaviour
 
         if(value.performed && _encostouRelogio == true)
         {
-
+            _ativaDialogoRelogio._ativaDialogoRelogio = true;
             _player.StartCoroutine(_player.TempoRelogio());
+            PosicaoRelogio.transform.gameObject.SetActive(false);
             _encostouRelogio = false;
+        }
 
-
+        if(value.canceled && _encostouRelogio == false)
+        {
+            _encostouRelogio = false;
         }
 
     }

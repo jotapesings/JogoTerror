@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Dialogo : MonoBehaviour
 {
 
+    [SerializeField] GameObject _parede;
+
     [SerializeField] ControlaAudio _audioPlayer;
     [SerializeField] AudioSource _soundMission;
 
@@ -40,6 +42,10 @@ public class Dialogo : MonoBehaviour
         {
             StartCoroutine(TempoDialogoPlayerInicio());
             //StartCoroutine(TempoDicaDoJogo());
+        }
+        else
+        {
+            _parede.gameObject.SetActive(false);
         }
     }
 
@@ -78,10 +84,11 @@ public class Dialogo : MonoBehaviour
         _objectText.DOFade(1, 0.1f); // Garante que o texto esteja visível
         _soundMission.Play();
         yield return _objectText.text = _textoDicaDoJogo[indexDica];
-        //yield return _objectText.DOText(_textoDicaDoJogo[indexDica], _duration).WaitForCompletion(); // Anima o texto
-        yield return new WaitForSeconds(15f); // Espera antes de desaparecer
+        yield return new WaitForSeconds(6f); // Espera antes de desaparecer
+        _parede.gameObject.SetActive(false);
         yield return _objectText.DOFade(0, 1f).WaitForCompletion(); // Faz o texto desaparecer
         indexDica += 1;
+        
     }
 
 }

@@ -97,7 +97,8 @@ public class GameControle : MonoBehaviour
 
     IEnumerator AtivaGigantossauro()
     {
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(80f);
+        
         _ativador.ativaGigantossauro = true;
     }
 

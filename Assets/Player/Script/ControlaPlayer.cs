@@ -63,7 +63,10 @@ public class ControlaPlayer : MonoBehaviour
 
     [SerializeField] AudioSource _danoAudio;
     [SerializeField] AudioSource _danoVoz;
-    [SerializeField] AudioClip[] _bibliotecaDano;
+
+
+    [SerializeField] List<AudioClip> _bibliotecaDanos = new List<AudioClip>();
+    [SerializeField] List<AudioClip> _minhaListaDeAudios = new List<AudioClip>();
 
     [SerializeField] public int vida;
     [SerializeField] Image _fechaImage;
@@ -100,13 +103,6 @@ public class ControlaPlayer : MonoBehaviour
         VidaDoJogador();
 
         _player.Move(_velocity * Time.deltaTime);
-
-
-        //Esse comando é só pra gente DEV. Poder destravar o jogador no inicio!
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _AtivaMovimento = true;
-        }
 
 
     }
@@ -229,7 +225,7 @@ public class ControlaPlayer : MonoBehaviour
     IEnumerator AnimacaoInicial()
     {
         _AtivaMovimento = false;
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(8f);
         _AtivaMovimento = true;
     }
 
@@ -254,14 +250,15 @@ public class ControlaPlayer : MonoBehaviour
     {
         vida -= 1;
         _morte.SetActive(true);
-        _danoVoz.PlayOneShot((_bibliotecaDano[Random.Range(0, _bibliotecaDano.Length)]));
         _danoAudio.Play();
+        int indiceSorteado = Random.Range(0, _bibliotecaDanos.Count);
+        _danoVoz.PlayOneShot((_bibliotecaDanos[indiceSorteado]));
+        _minhaListaDeAudios.Add(_bibliotecaDanos[indiceSorteado]);
+        _bibliotecaDanos.Remove(_bibliotecaDanos[indiceSorteado]);
         ativaSomDano = true;
         yield return new WaitForSeconds(.5f);
         _morte.SetActive(false);
         ativaSomDano = false;
-
-
 
     }
 
@@ -293,10 +290,11 @@ public class ControlaPlayer : MonoBehaviour
 
     public IEnumerator TempoRelogio()
     {
+        
         _AtivaMovimento = false;
-        yield return new WaitForSeconds(1f);
-        _fechaImage.DOColor(_cor[0], 2f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(8f);
+        _fechaImage.DOColor(_cor[0], 5f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("FimDoJogo");
 
     }
