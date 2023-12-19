@@ -106,14 +106,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.37114456
+      - time: 0.38003343
         functionName: PassosGigante
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9926021
+      - time: 0.9703799
         functionName: PassosGigante
         data: 
         objectReferenceParameter: {instanceID: 0}

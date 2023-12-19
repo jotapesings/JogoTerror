@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Cinemachine;
 
 public class MovimentoDino2 : MonoBehaviour
 {
-
-
-
-
     [SerializeField] public bool ativaGigantossauro;
 
     [SerializeField] AudioSource _passosG;
@@ -19,8 +16,7 @@ public class MovimentoDino2 : MonoBehaviour
 
     [SerializeField] public Transform _referenciaBoca;
 
-
-    bool ativaAtaque =  true;
+    bool ativaAtaque = true;
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +27,10 @@ public class MovimentoDino2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(ativaGigantossauro == true)
+        if (ativaGigantossauro == true)
         {
             if (_gigantossauro.speed == 2.5f)
             {
-                
                 _anim.SetFloat("InputX", 0);
                 _gigantossauro.destination = _player.transform.position;
             }
@@ -46,20 +40,15 @@ public class MovimentoDino2 : MonoBehaviour
                 StartCoroutine(TempoDaMordida());
             }
         }
-
-
-       
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && ativaAtaque == true)
+        if (other.gameObject.CompareTag("Player") && ativaAtaque == true)
         {
             _gigantossauro.speed = 0f;
         }
     }
-
 
     public void PassosGigante()
     {
@@ -74,6 +63,4 @@ public class MovimentoDino2 : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _gigantossauro.speed = 2.5f;
     }
-
 }
-
