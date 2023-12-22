@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PegaItem : MonoBehaviour
 {
 
+    [SerializeField] GameObject _particulaRelogio;
 
     [SerializeField] AudioSource _itemCollectionSound;
     [SerializeField] AudioSource _soundPapel;
@@ -69,6 +70,7 @@ public class PegaItem : MonoBehaviour
 
         if(qtd_ovos == 0)
         {
+            
             PegaRelogio();
         }
 
@@ -209,6 +211,7 @@ public class PegaItem : MonoBehaviour
             _textDialogoDosOvos.StartCoroutine(_textDialogoDosOvos.DialogoOvo());
             if(qtd_ovos <= 0)
             {
+                _particulaRelogio.SetActive(true);
                 _textDialogoDosOvos.continuar = false;
                 _textDialogoDosOvos.StartCoroutine(_textDialogoDosOvos.OutraCorroutina());
             }

@@ -9,11 +9,13 @@ public class Menu : MonoBehaviour
 
     private void Start()
     {
+
         Time.timeScale = 1;
     }
 
     public void  Iniciar()
     {
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

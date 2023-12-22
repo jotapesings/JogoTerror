@@ -78,7 +78,6 @@ public class ControlaPlayer : MonoBehaviour
     void Awake()
     {
         _referenciaBocaDino = FindObjectOfType<MovimentoDino2>();
-
         _player = GetComponent<CharacterController>();
         _MyCamera = Camera.main.transform;
 
@@ -90,11 +89,12 @@ public class ControlaPlayer : MonoBehaviour
     private void Start()
     {
         ativaSomDano = false;
+        
     }
 
     void Update()
     {
-
+        
         _checkGround = _player.isGrounded;
 
         MovimentoPlayer();
@@ -117,6 +117,7 @@ public class ControlaPlayer : MonoBehaviour
         {
             _AtivaMovimento = false;
             _fechaImage.DOColor(_cor[0], 1f);
+            
 
         }
 
@@ -134,7 +135,7 @@ public class ControlaPlayer : MonoBehaviour
     {
         if (_AtivaMovimento == true)
         {
-            _move = context.ReadValue<Vector3>();
+            _move = context.ReadValue<Vector3>().normalized;
         }
 
                   

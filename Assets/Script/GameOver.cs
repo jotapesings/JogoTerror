@@ -20,6 +20,7 @@ public class GameOver : MonoBehaviour
 
         PlayerPrefs.SetInt("desativa", false ? 1 : 0);
 
+
         _vidaJogador = FindObjectOfType<ControlaPlayer>();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -29,18 +30,25 @@ public class GameOver : MonoBehaviour
 
     private void Update()
     {
-        if(_vidaJogador.vida <= 0)
+
+        if (_vidaJogador.vida <= 0)
         {
+            
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             StartCoroutine(TempoGameOver());
+            
         }
     }
 
     public void reiniciar(string sceneName)
     {
-
+        
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+
+
     }
 
 
